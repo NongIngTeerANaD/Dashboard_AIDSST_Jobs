@@ -232,3 +232,37 @@ def build_t1_5_grad_unemployment(countries: list, year_range: list):
     last = int(sub["year"].max())
     return chart_card(title, fig, source_id="S07 (World Bank SL.UEM.ADVN.ZS, ที่มา ILO)", license_name="CC BY 4.0",
                       data_year=f"{int(sub['year'].min())}-{last}", status="verified")
+
+
+_FIELD_LABELS = {"F054": "คณิตศาสตร์และสถิติ", "F0542": "สถิติ", "F061": "ICT"}
+_LEVEL_LABELS = {"ED6": "ป.ตรี", "ED7": "ป.โท", "ED8": "ป.เอก"}
+_DEGREE_TO_LEVEL = {"bachelor": "ED6", "master": "ED7", "phd": "ED8"}
+
+
+def build_t1_6_eu_graduates(countries: list, year_range: list, degrees: list):
+    """T1-6: graduates in mathematics/statistics and ICT fields (Eurostat educ_uoe_grad02, S09). Europe only."""
+    title = "T1-6: จำนวนผู้สำเร็จการศึกษาสาขาคณิตศาสตร์/สถิติ และ ICT (ยุโรป)"
+    df = data_store.eu_graduates
+    if df.empty:
+        return empty_chart_card(title, msg="ยังไม่มีข้อมูล S09 — รัน python -m etl.fetch_s09_eurostat_grad")
+    df = df.copy()
+    df["year"] = pd.to_numeric(df["year"], errors="coerce")
+    levels = [_DEGREE_TO_LEVEL[d] for d in degrees if d in _DEGREE_TO_LEVEL]
+    areas = ["EU27_2020"] + [c for c in countries if c in ("DE", "FR")]
+    sub = df[df["country_code"].isin(areas) & df["field"].isin(_FIELD_LABELS) & df["level"].isin(levels)
+             & df["year"].between(year_range[0], year_range[1])].dropna(subset=["graduates"])
+    if sub.empty:
+        return empty_chart_card(title, msg="ไม่มีข้อมูลผู้จบตามตัวกรองที่เลือก (S09 มีถึงปี 2024; ระดับ ป.ตรี/โท/เอก)")
+    sub = sub.assign(สาขา=sub["field"].map(_FIELD_LABELS), ระดับ=sub["level"].map(_LEVEL_LABELS),
+                     พื้นที่=sub["country_code"].replace({"EU27_2020": "EU27"}))
+    fig = px.line(sub.sort_values("year"), x="year", y="graduates", color="สาขา", line_dash="ระดับ",
+                  facet_col="พื้นที่", facet_col_wrap=3, markers=True,
+                  title="ผู้สำเร็จการศึกษา (คน/ปี) แยกสาขาและระดับ",
+                  labels={"year": "ปี", "graduates": "จำนวนผู้จบ (คน)"},
+                  color_discrete_sequence=px.colors.qualitative.Bold)
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+    fig.update_xaxes(dtick=2)
+    fig.update_yaxes(matches=None)
+    fig.update_layout(hovermode="x unified", margin=dict(t=60, b=40, l=40, r=20), legend=dict(orientation="h", y=-0.3, title=None))
+    return chart_card(title, fig, source_id="S09 (Eurostat educ_uoe_grad02)", license_name="Eurostat reuse policy",
+                      data_year=f"{int(sub['year'].min())}-{int(sub['year'].max())}", status="verified")

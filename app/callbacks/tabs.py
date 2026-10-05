@@ -7,6 +7,7 @@ from app.charts.tab1_charts import (
     build_t1_3_employment,
     build_t1_4_tuition,
     build_t1_5_grad_unemployment,
+    build_t1_6_eu_graduates,
 )
 from app.charts.tab2_charts import (
     build_t2_5_ai_share,
@@ -64,6 +65,7 @@ def render_tab1_view(filters: dict, selection: dict = None):
         ]),
         dbc.Row([
             dbc.Col(build_t1_5_grad_unemployment(filters_sel.get("country", countries), year_range), lg=6, className="mb-4"),
+            dbc.Col(build_t1_6_eu_graduates(countries, year_range, degrees), lg=6, className="mb-4"),
         ])
     ], fluid=True, className="p-0")
 
