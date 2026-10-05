@@ -85,3 +85,10 @@ def test_real_data_charts_present():
     t1 = _graphs(update_tab_content("tab-1", {**BASE, "country": ["TH", "SG"]}, NOSEL))
     t2 = _graphs(update_tab_content("tab-2", {**BASE, "country": ["DE", "FR"]}, NOSEL))
     assert len(t1) >= 4 and len(t2) >= 4
+
+
+def test_every_graph_has_explicit_height():
+    for tab in ["tab-1", "tab-2", "tab-3"]:
+        for g in _graphs(update_tab_content(tab, BASE, NOSEL)):
+            assert g.style and g.style.get("height"), (tab, g.id)
+            assert g.figure.layout.height

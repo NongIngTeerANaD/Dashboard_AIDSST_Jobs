@@ -12,6 +12,8 @@ COLOR_SUCCESS = "#2ECC71"
 COLOR_WARNING = "#F39C12"
 COLOR_DANGER = "#E74C3C"
 
+GRAPH_HEIGHT = 460
+
 STATUS_ICONS = {
     "verified": "✅ ข้อมูลเปิดตรวจแล้ว",
     "old": "⚠️ เก่ากว่า 3 ปี",
@@ -52,7 +54,10 @@ def chart_card(title: str, fig: go.Figure, source_id: str, license_name: str, da
     if is_old:
         badge_elements.append(html.Span(" ⚠️ ข้อมูลอาจเก่ากว่า 3 ปี", className="text-warning fw-bold ms-2"))
 
-    graph_kwargs = {"figure": fig, "config": {"displayModeBar": True, "responsive": True}}
+    # Explicit height: without it a responsive dcc.Graph inside a flex card collapses to a thin strip.
+    fig.update_layout(height=GRAPH_HEIGHT, autosize=True)
+    graph_kwargs = {"figure": fig, "config": {"displayModeBar": True, "responsive": True},
+                    "style": {"height": f"{GRAPH_HEIGHT}px", "width": "100%"}}
     if graph_id:
         graph_kwargs["id"] = graph_id
 
