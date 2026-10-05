@@ -50,6 +50,29 @@ def build_t2_1_postings(countries: list, year_range: list, roles: list = None):
                       data_year=f"{year_range[0]}-{year_range[1]}", status="verified")
 
 
+def build_t2_6_ict_specialists(countries: list, year_range: list):
+    """T2-6: ICT specialists as % of total employment, Eurostat (S08). EU countries only."""
+    title = "T2-6: สัดส่วนผู้เชี่ยวชาญด้าน ICT ในการจ้างงานทั้งหมด (Eurostat)"
+    df = data_store.ict_specialists
+    if df.empty:
+        return empty_chart_card(title, msg="ยังไม่มีข้อมูล S08 — รัน python -m etl.fetch_s08_eurostat_ict")
+    df = df.copy()
+    df["year"] = pd.to_numeric(df["year"], errors="coerce")
+    wanted = ["EU27_2020"] + [c for c in countries if c in ("DE", "FR")] + (["UK"] if "GB" in countries else [])
+    sub = df[df["country_code"].isin(wanted) & df["year"].between(year_range[0], year_range[1])].dropna(subset=["ict_specialists_pct"])
+    if sub.empty:
+        return empty_chart_card(title)
+    sub = sub.assign(area=sub["country_code"].replace({"EU27_2020": "EU27 (ค่ารวม)", "UK": "UK (ถึงปีที่ Eurostat มีข้อมูล)"}))
+    fig = px.line(sub.sort_values(["area", "year"]), x="year", y="ict_specialists_pct", color="area", markers=True,
+                  title="ผู้เชี่ยวชาญด้าน ICT (% ของการจ้างงานทั้งหมด)",
+                  labels={"year": "ปี", "ict_specialists_pct": "% ของการจ้างงาน", "area": "ประเทศ/ภูมิภาค"},
+                  color_discrete_sequence=px.colors.qualitative.Vivid)
+    fig.update_xaxes(dtick=1)
+    fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=20), legend=dict(orientation="h", y=-0.25, title=None))
+    return chart_card(title, fig, source_id="S08 (Eurostat isoc_sks_itspt)", license_name="Eurostat reuse policy",
+                      data_year=f"{int(sub['year'].min())}-{int(sub['year'].max())}", status="verified")
+
+
 def build_t2_5_ai_share(countries: list, year_range: list):
     """T2-5: share of postings mentioning AI/GenAI (S02, real data)."""
     title = "T2-5: สัดส่วนประกาศงานที่กล่าวถึง AI (Indeed AI Tracker)"

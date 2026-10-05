@@ -5,14 +5,14 @@ from etl._base import RAW_DIR, add_provenance, save_parquet, log
 SOURCE_ID = "S09"
 SOURCE_LICENSE = "Eurostat reuse policy"
 SOURCE_URL = "https://ec.europa.eu/eurostat/web/main/help/copyright-notice"
-# Fields: F0541=Math, F0542=Statistics, F0613=Software/app dev
-FIELDS = ["F0541", "F0542", "F0613", "F061"]
+# iscedf13 codes: F054=Mathematics and statistics, F061=ICT (F0613=Software/app development)
+FIELDS = ["F054", "F0541", "F0542", "F061", "F0611", "F0612", "F0613"]
 LEVELS = ["ED6", "ED7", "ED8"]   # Bachelor, Master, PhD
 
 def _fetch_field_level(field: str, level: str) -> pd.DataFrame:
     url = (
         "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/educ_uoe_grad02"
-        f"?format=JSON&lang=en&isced11={level}&fieldedu={field}&sex=T"
+        f"?format=JSON&lang=en&isced11={level}&iscedf13={field}&sex=T&unit=NR"
     )
     resp = requests.get(url, timeout=60)
     if resp.status_code != 200:
@@ -37,7 +37,11 @@ def run() -> None:
     for field in FIELDS:
         for level in LEVELS:
             dfs.append(_fetch_field_level(field, level))
-    df = pd.concat([d for d in dfs if not d.empty], ignore_index=True)
+    dfs = [d for d in dfs if not d.empty]
+    if not dfs:
+        log.warning("[S09] no data returned for any field/level")
+        return
+    df = pd.concat(dfs, ignore_index=True)
     df = add_provenance(df, SOURCE_ID, SOURCE_LICENSE, SOURCE_URL, "2005-2024")
     dest = RAW_DIR / "s09"; dest.mkdir(exist_ok=True)
     df.to_csv(dest / "eurostat_graduates.csv", index=False)

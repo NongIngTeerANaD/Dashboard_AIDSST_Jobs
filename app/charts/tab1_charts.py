@@ -205,3 +205,30 @@ def build_t1_4_tuition(countries: list, degrees: list, roles: list, program_id: 
         data_year="-",
         status="sample"
     )
+
+
+ISO2_TO_ISO3 = {"TH": "THA", "SG": "SGP", "US": "USA", "GB": "GBR", "DE": "DEU", "FR": "FRA", "AU": "AUS", "IN": "IND"}
+
+
+def build_t1_5_grad_unemployment(countries: list, year_range: list):
+    """T1-5: unemployment rate of people with advanced education (World Bank / ILO modelled estimate, S07)."""
+    title = "T1-5: อัตราว่างงานของผู้จบการศึกษาระดับสูง"
+    df = data_store.uem_advanced
+    if df.empty:
+        return empty_chart_card(title, msg="ยังไม่มีข้อมูล S07 — รัน python -m etl.fetch_s07_worldbank")
+    df = df.copy()
+    df["year"] = pd.to_numeric(df["year"], errors="coerce")
+    codes = [ISO2_TO_ISO3[c] for c in countries if c in ISO2_TO_ISO3]
+    sub = df[df["country_code"].isin(codes) & df["year"].between(year_range[0], year_range[1])].dropna(subset=["unemployment_rate_pct"])
+    if sub.empty:
+        return empty_chart_card(title)
+    sub = sub.sort_values(["country", "year"])
+    fig = px.line(sub, x="year", y="unemployment_rate_pct", color="country", markers=True,
+                  title="อัตราว่างงานของผู้มีการศึกษาระดับสูง (% ของกำลังแรงงานกลุ่มนี้)",
+                  labels={"year": "ปี", "unemployment_rate_pct": "อัตราว่างงาน (%)", "country": "ประเทศ"},
+                  color_discrete_sequence=px.colors.qualitative.Bold)
+    fig.update_xaxes(dtick=1)
+    fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=20), legend=dict(orientation="h", y=-0.25, title=None))
+    last = int(sub["year"].max())
+    return chart_card(title, fig, source_id="S07 (World Bank SL.UEM.ADVN.ZS, ที่มา ILO)", license_name="CC BY 4.0",
+                      data_year=f"{int(sub['year'].min())}-{last}", status="verified")

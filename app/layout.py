@@ -22,6 +22,7 @@ _COUNTRY_OPTIONS = [
     {"label": "เยอรมนี (DE)",         "value": "DE"},
     {"label": "ฝรั่งเศส (FR)",        "value": "FR"},
     {"label": "ออสเตรเลีย (AU)",      "value": "AU"},
+    {"label": "อินเดีย (IN)",         "value": "IN"},
 ]
 
 _DEGREE_OPTIONS = [

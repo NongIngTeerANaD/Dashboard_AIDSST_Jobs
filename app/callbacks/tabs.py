@@ -6,9 +6,11 @@ from app.charts.tab1_charts import (
     build_t1_2_courses,
     build_t1_3_employment,
     build_t1_4_tuition,
+    build_t1_5_grad_unemployment,
 )
 from app.charts.tab2_charts import (
     build_t2_5_ai_share,
+    build_t2_6_ict_specialists,
     build_t2_1_postings,
     build_t2_2_skills,
     build_t2_3_employers,
@@ -59,6 +61,9 @@ def render_tab1_view(filters: dict, selection: dict = None):
         dbc.Row([
             dbc.Col(build_t1_3_employment(filters_sel.get("country", countries)), lg=6, className="mb-4"),
             dbc.Col(build_t1_4_tuition(countries, degrees, roles, program_id=pid), lg=6, className="mb-4"),
+        ]),
+        dbc.Row([
+            dbc.Col(build_t1_5_grad_unemployment(filters_sel.get("country", countries), year_range), lg=6, className="mb-4"),
         ])
     ], fluid=True, className="p-0")
 
@@ -80,6 +85,7 @@ def render_tab2_view(filters: dict, selection: dict = None):
         ]),
         dbc.Row([
             dbc.Col(build_t2_5_ai_share(countries, year_range), lg=6, className="mb-4"),
+            dbc.Col(build_t2_6_ict_specialists(countries, year_range), lg=6, className="mb-4"),
         ])
     ], fluid=True, className="p-0")
 

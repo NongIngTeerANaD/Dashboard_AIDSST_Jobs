@@ -7,6 +7,8 @@ _REAL = [
     ("S01", "Indeed Job Postings Index", "CC BY 4.0", "https://github.com/hiring-lab/job_postings_tracker", "job_postings"),
     ("S01", "Indeed Job Postings Index รายสายอาชีพ (Data & Analytics, Software Development ฯลฯ)", "CC BY 4.0", "https://github.com/hiring-lab/job_postings_tracker", "sector_postings"),
     ("S02", "Indeed AI Tracker", "CC BY 4.0", "https://github.com/hiring-lab/ai-tracker", "ai_tracker"),
+    ("S07", "World Bank: อัตราว่างงานผู้มีการศึกษาระดับสูง (SL.UEM.ADVN.ZS, ที่มา ILO)", "CC BY 4.0", "https://data.worldbank.org/indicator/SL.UEM.ADVN.ZS", "uem_advanced"),
+    ("S08", "Eurostat: ICT specialists in employment (isoc_sks_itspt)", "Eurostat reuse policy", "https://ec.europa.eu/eurostat/web/main/help/copyright-notice", "ict_specialists"),
     ("S14", "Singapore MOM: Employed residents by occupation/qualification", "Singapore Open Data Licence v1.0", "https://data.gov.sg/datasets/d_576bb1f46eabb041d8d966030170ec6f/view", "sg_mom"),
     ("S15", "Singapore Graduate Employment Survey", "Singapore Open Data Licence v1.0", "https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view", "sg_ges"),
 ]

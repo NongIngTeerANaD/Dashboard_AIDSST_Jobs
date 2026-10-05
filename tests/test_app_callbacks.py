@@ -70,3 +70,10 @@ def test_no_fabricated_provenance():
     for name in ["graduates", "courses", "tuition", "skills_demand"]:
         df = getattr(data_store, name)
         assert set(df["source_id"]) == {"SAMPLE_DEMO"}, name
+
+
+def test_real_data_charts_present():
+    # S07 (World Bank) and S08 (Eurostat) charts render and carry real-data status
+    t1 = _graphs(update_tab_content("tab-1", {**BASE, "country": ["TH", "SG"]}, NOSEL))
+    t2 = _graphs(update_tab_content("tab-2", {**BASE, "country": ["DE", "FR"]}, NOSEL))
+    assert len(t1) >= 4 and len(t2) >= 4
