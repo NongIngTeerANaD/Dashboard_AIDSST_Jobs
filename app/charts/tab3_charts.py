@@ -48,7 +48,8 @@ def compute_mismatch_table(countries: list, degrees: list, roles: list, program_
     skill_demand_sum["d"] = skill_demand_sum["importance_or_freq"].apply(lambda v: demand_share(v, total_demand_val))
 
     # 3. Cartesian product of filtered programs x all skills
-    all_skill_ids = df_skills["skill_id"].unique()
+    # only skills that have demand evidence (real O*NET data covers a subset of the taxonomy)
+    all_skill_ids = [sid for sid in df_skills["skill_id"].unique() if sid in set(sub_demand["skill_id"])]
     rows = []
     for _, prog in m_prog.iterrows():
         pid = prog["program_id"]
@@ -101,8 +102,8 @@ def build_t3_2_heatmap(mismatch_df: pd.DataFrame):
     return chart_card(
         "T3-2: Heatmap ช่องว่างทักษะ (Skill Gap Heatmap)",
         fig,
-        source_id="SAMPLE_DEMO",
-        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        source_id="S03 O*NET (ฝั่งตลาด, จริง) + SAMPLE_DEMO (ฝั่งหลักสูตร)",
+        license_name="CC BY 4.0 / ตัวอย่างสาธิตฝั่งหลักสูตร",
         data_year="-",
         status="sample",
         graph_id="graph-t3-2",
@@ -152,15 +153,15 @@ def build_t3_3_quadrant(mismatch_df: pd.DataFrame):
     fig.update_traces(textposition="top center", marker=dict(size=14))
     # label only the informative quadrants to avoid overlapping text; others stay available on hover
     for tr in fig.data:
-        if not (tr.name.startswith("1.") or tr.name.startswith("2.")):
+        if not tr.name.startswith("2."):
             tr.mode = "markers"
     fig.update_layout(margin=dict(t=50, b=40, l=40, r=40))
 
     return chart_card(
         "T3-3: กราฟ 4 จตุภาค (Quadrant Analysis)",
         fig,
-        source_id="SAMPLE_DEMO",
-        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        source_id="S03 O*NET (ฝั่งตลาด, จริง) + SAMPLE_DEMO (ฝั่งหลักสูตร)",
+        license_name="CC BY 4.0 / ตัวอย่างสาธิตฝั่งหลักสูตร",
         data_year="-",
         status="sample"
     )
@@ -191,14 +192,14 @@ def build_t3_4_top_gaps(mismatch_df: pd.DataFrame):
         },
         text="gap"
     )
-    fig.update_traces(texttemplate="%{text:+.3f}", textposition="outside")
-    fig.update_layout(margin=dict(t=40, b=40, l=150, r=40))
+    fig.update_traces(texttemplate="%{text:+.3f}", textposition="outside", cliponaxis=False)
+    fig.update_layout(margin=dict(t=40, b=40, l=10, r=70), yaxis=dict(automargin=True, title=None))
 
     return chart_card(
         "T3-4: ทักษะที่ขาดแคลนและเกินความต้องการสูงสุด",
         fig,
-        source_id="SAMPLE_DEMO",
-        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        source_id="S03 O*NET (ฝั่งตลาด, จริง) + SAMPLE_DEMO (ฝั่งหลักสูตร)",
+        license_name="CC BY 4.0 / ตัวอย่างสาธิตฝั่งหลักสูตร",
         data_year="-",
         status="sample"
     )
@@ -236,8 +237,8 @@ def build_t3_5_coverage(mismatch_df: pd.DataFrame):
     return chart_card(
         "T3-5: คะแนนความครอบคลุมทักษะ (Coverage@N)",
         fig,
-        source_id="SAMPLE_DEMO",
-        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        source_id="S03 O*NET (ฝั่งตลาด, จริง) + SAMPLE_DEMO (ฝั่งหลักสูตร)",
+        license_name="CC BY 4.0 / ตัวอย่างสาธิตฝั่งหลักสูตร",
         data_year="-",
         status="sample"
     )

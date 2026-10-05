@@ -114,7 +114,7 @@ def build_t2_2_skills(roles: list):
         y="skill_name",
         orientation="h",
         color="category",
-        title="ความต้องการทักษะในตลาดงาน (คะแนนความสำคัญ 0 - 1)",
+        title="ความต้องการทักษะ (คะแนน 0–1: สัดส่วนอาชีพตัวแทนที่ระบุ software นั้น / ความสำคัญของความรู้ใน O*NET)",
         labels={
             "importance_or_freq": "คะแนนความต้องการเฉลี่ย",
             "skill_name": "ทักษะ / เครื่องมือ",
@@ -124,8 +124,19 @@ def build_t2_2_skills(roles: list):
         color_discrete_sequence=px.colors.qualitative.Set2
     )
     fig.update_traces(texttemplate="%{text:.2f}", textposition="outside")
-    fig.update_layout(margin=dict(t=40, b=40, l=150, r=40))
+    fig.update_layout(margin=dict(t=40, b=40, l=10, r=40), yaxis=dict(automargin=True, title=None), xaxis=dict(range=[0, 1.15]))
+    fig.update_yaxes(categoryorder="total ascending")
 
+    real = (sub["source_id"] == "S03").all()
+    if real:
+        return chart_card(
+            "T2-2: ทักษะและเครื่องมือที่ตลาดต้องการสูงสุด",
+            fig,
+            source_id="S03 (O*NET 31.0 — อาชีพตัวแทนของสายงาน, จับคู่ด้วยคีย์เวิร์ด)",
+            license_name="CC BY 4.0",
+            data_year="O*NET 31.0",
+            status="verified"
+        )
     return chart_card(
         "T2-2: ทักษะและเครื่องมือที่ตลาดต้องการสูงสุด",
         fig,

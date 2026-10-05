@@ -19,7 +19,9 @@ class DataLoader:
         self.course_skill_map = self._read_csv(CURATED_DIR / "course_skill_map.csv")
         self.graduates = self._read_csv(CURATED_DIR / "graduates.csv")
         self.skills = self._read_csv(CURATED_DIR / "skill_taxonomy.csv")
-        self.skills_demand = self._read_csv(CURATED_DIR / "skills_demand.csv")
+        # real O*NET-derived demand (S03) takes precedence over the curated sample file
+        s03 = self._read_parquet(PROCESSED_DIR / "s03_skills_demand.parquet")
+        self.skills_demand = s03 if not s03.empty else self._read_csv(CURATED_DIR / "skills_demand.csv")
         self.tuition = self._read_csv(CURATED_DIR / "tuition.csv")
 
         # 2. Processed Open Data

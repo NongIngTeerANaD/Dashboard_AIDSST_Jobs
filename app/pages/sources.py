@@ -7,6 +7,7 @@ _REAL = [
     ("S01", "Indeed Job Postings Index", "CC BY 4.0", "https://github.com/hiring-lab/job_postings_tracker", "job_postings"),
     ("S01", "Indeed Job Postings Index รายสายอาชีพ (Data & Analytics, Software Development ฯลฯ)", "CC BY 4.0", "https://github.com/hiring-lab/job_postings_tracker", "sector_postings"),
     ("S02", "Indeed AI Tracker", "CC BY 4.0", "https://github.com/hiring-lab/ai-tracker", "ai_tracker"),
+    ("S03", "O*NET 31.0: Software Skills / Knowledge / Essential Skills (อาชีพตัวแทนสายงาน)", "CC BY 4.0", "https://www.onetcenter.org/database.html", "skills_demand"),
     ("S07", "World Bank: อัตราว่างงานผู้มีการศึกษาระดับสูง (SL.UEM.ADVN.ZS, ที่มา ILO)", "CC BY 4.0", "https://data.worldbank.org/indicator/SL.UEM.ADVN.ZS", "uem_advanced"),
     ("S08", "Eurostat: ICT specialists in employment (isoc_sks_itspt)", "Eurostat reuse policy", "https://ec.europa.eu/eurostat/web/main/help/copyright-notice", "ict_specialists"),
     ("S09", "Eurostat: ผู้สำเร็จการศึกษาแยกสาขา/ระดับ (educ_uoe_grad02)", "Eurostat reuse policy", "https://ec.europa.eu/eurostat/web/main/help/copyright-notice", "eu_graduates"),

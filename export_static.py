@@ -28,8 +28,8 @@ for tid, title in TABS:
     parts.append("</div>")
 page = ("<!doctype html><html lang='th'><head><meta charset='utf-8'><title>Dashboard Snapshot</title>"
         "<style>body{font-family:Segoe UI,Tahoma,sans-serif;margin:24px;background:#f6f7f9}"
-        ".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(560px,1fr));gap:16px}"
-        ".card{background:#fff;border-radius:8px;padding:8px;box-shadow:0 1px 4px #0002}"
+        ".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(560px,100%),1fr));gap:16px}"
+        ".card{min-width:0;overflow:hidden;background:#fff;border-radius:8px;padding:8px;box-shadow:0 1px 4px #0002}"
         ".warn{background:#fff3cd;padding:10px;border-radius:6px}</style></head><body>"
         "<h1>Dashboard วิเคราะห์ตลาดงานและ Skill Mismatch (snapshot)</h1>"
         "<p class='warn'>⚠️ ข้อมูลผู้จบ/รายวิชา/ค่าเทอม/ความต้องการ skill และ Tab 3 เป็นตัวอย่างสาธิต ไม่ใช่ข้อมูลจริง "

@@ -67,9 +67,17 @@ def test_chips_show_selection():
 
 
 def test_no_fabricated_provenance():
-    for name in ["graduates", "courses", "tuition", "skills_demand"]:
+    for name in ["graduates", "courses", "tuition"]:
         df = getattr(data_store, name)
         assert set(df["source_id"]) == {"SAMPLE_DEMO"}, name
+    assert set(data_store.skills_demand["source_id"]) <= {"SAMPLE_DEMO", "S03"}
+
+
+def test_s03_demand_has_evidence_when_real():
+    d = data_store.skills_demand
+    if set(d["source_id"]) == {"S03"}:
+        assert d["importance_or_freq"].between(0, 1).all()
+        assert (d.loc[d["importance_or_freq"] > 0, "evidence"].str.len() > 0).all()
 
 
 def test_real_data_charts_present():
