@@ -23,7 +23,7 @@ parts, first = [], True
 for tid, title in TABS:
     parts.append(f"<h2>{title}</h2><div class='grid'>")
     for fig in graphs(update_tab_content(tid, DEFAULT_FILTERS, {"program_id": None}), []):
-        parts.append("<div class='card'>" + fig.to_html(full_html=False, include_plotlyjs=True if first else False) + "</div>")
+        parts.append("<div class='card'>" + fig.to_html(full_html=False, include_plotlyjs=True if first else False, default_width="100%", config={"responsive": True}) + "</div>")
         first = False
     parts.append("</div>")
 page = ("<!doctype html><html lang='th'><head><meta charset='utf-8'><title>Dashboard Snapshot</title>"

@@ -9,7 +9,7 @@ import dash_bootstrap_components as dbc
 DEFAULT_FILTERS = {
     "country": ["TH", "SG", "US"],
     "year_start": 2020,
-    "year_end": 2025,
+    "year_end": 2026,
     "degree": ["bachelor", "master"],
     "role": ["ai_ml", "data_science", "statistics", "data_analyst"],
 }

@@ -5,6 +5,7 @@ from app.data_loader import data_store
 
 _REAL = [
     ("S01", "Indeed Job Postings Index", "CC BY 4.0", "https://github.com/hiring-lab/job_postings_tracker", "job_postings"),
+    ("S01", "Indeed Job Postings Index รายสายอาชีพ (Data & Analytics, Software Development ฯลฯ)", "CC BY 4.0", "https://github.com/hiring-lab/job_postings_tracker", "sector_postings"),
     ("S02", "Indeed AI Tracker", "CC BY 4.0", "https://github.com/hiring-lab/ai-tracker", "ai_tracker"),
     ("S14", "Singapore MOM: Employed residents by occupation/qualification", "Singapore Open Data Licence v1.0", "https://data.gov.sg/datasets/d_576bb1f46eabb041d8d966030170ec6f/view", "sg_mom"),
     ("S15", "Singapore Graduate Employment Survey", "Singapore Open Data Licence v1.0", "https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view", "sg_ges"),

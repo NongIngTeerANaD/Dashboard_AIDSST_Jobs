@@ -6,7 +6,7 @@ from dash import html
 DEFAULT_FILTERS = {
     "country": ["TH", "SG", "US"],
     "year_start": 2020,
-    "year_end": 2025,
+    "year_end": 2026,
     "degree": ["bachelor", "master"],
     "role": ["ai_ml", "data_science", "statistics", "data_analyst"],
 }
@@ -40,7 +40,7 @@ def update_store(country, year, degree, role):
     return {
         "country": country or [],
         "year_start": year[0] if (year and len(year) == 2) else 2020,
-        "year_end": year[1] if (year and len(year) == 2) else 2025,
+        "year_end": year[1] if (year and len(year) == 2) else 2026,
         "degree": degree or [],
         "role": role or [],
     }

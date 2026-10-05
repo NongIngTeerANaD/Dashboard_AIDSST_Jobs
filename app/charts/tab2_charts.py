@@ -5,53 +5,69 @@ import plotly.graph_objects as go
 from app.data_loader import data_store
 from app.charts.common import chart_card, empty_chart_card
 
-def build_t2_1_postings(countries: list, year_range: list):
-    """T2-1: ปริมาณตำแหน่งงานว่างและแนวโน้มความต้องการ (Indeed S01)."""
-    df = data_store.job_postings
-    if df.empty:
-        return empty_chart_card("T2-1: ดัชนีความต้องการแรงงาน (Indeed Job Postings Index)")
+ROLE_TO_SECTORS = {
+    "data_science": ["Data & Analytics"],
+    "data_analyst": ["Data & Analytics"],
+    "statistics": ["Data & Analytics", "Scientific Research & Development"],
+    "ai_ml": ["Software Development", "Data & Analytics"],
+}
 
+
+def _weekly(df: pd.DataFrame, group_cols: list, date_col: str = "date") -> pd.DataFrame:
+    """Keep one point per 7 days *within each series* (the old global stride mixed series and zig-zagged)."""
+    df = df.sort_values(group_cols + [date_col])
+    return df[df.groupby(group_cols).cumcount() % 7 == 0]
+
+
+def build_t2_1_postings(countries: list, year_range: list, roles: list = None):
+    """T2-1: Indeed postings index by occupational sector (S01), sector chosen by the role filter."""
+    title = "T2-1: ดัชนีความต้องการแรงงานรายสายอาชีพ (Indeed Job Postings Index)"
+    df = data_store.sector_postings
+    if df.empty:
+        return empty_chart_card(title, msg="ยังไม่มีข้อมูลรายสายอาชีพ — รัน python -m etl.fetch_s01_sector")
+    roles = roles or list(ROLE_TO_SECTORS)
+    sectors = sorted({s for r in roles for s in ROLE_TO_SECTORS.get(r, [])})
     df = df.copy()
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
-    df["year"] = df["date"].dt.year
-    sub = df[
-        df["country_code"].isin(countries) &
-        (df["year"] >= year_range[0]) &
-        (df["year"] <= year_range[1])
-    ]
+    sub = df[df["country_code"].isin(countries) & df["display_name"].isin(sectors)
+             & (df["date"].dt.year >= year_range[0]) & (df["date"].dt.year <= year_range[1])]
     if sub.empty:
         return empty_chart_card(
-            "T2-1: ดัชนีความต้องการแรงงาน (Indeed Job Postings Index)",
-            msg="ไม่มีข้อมูลประกาศงานของไทย/อาเซียน (Indeed มีเฉพาะ US, GB, DE, FR, AU) — กรุณาเลือกประเทศดังกล่าวในตัวกรอง"
-        )
-
-    # Subsample weekly to make chart snappy and fast
-    sub = sub.sort_values("date")
-    sub_sampled = sub.iloc[::7]
-
+            title,
+            msg="ไม่มีข้อมูลประกาศงานของไทย/อาเซียน (Indeed มีเฉพาะ US, GB, DE, FR, AU) — เลือกประเทศดังกล่าวในตัวกรอง")
+    sub = _weekly(sub, ["country_code", "display_name"])
     fig = px.line(
-        sub_sampled,
-        x="date",
-        y="indeed_job_postings_index_SA",
-        color="country_code",
-        title="ดัชนีประกาศงาน Indeed Job Postings Index (ฐาน 1 ก.พ. 2020 = 100)",
-        labels={
-            "date": "วันที่",
-            "indeed_job_postings_index_SA": "ดัชนีการจ้างงาน (ปรับฤดูกาล)",
-            "country_code": "ประเทศ"
-        },
-        color_discrete_sequence=px.colors.qualitative.Dark24
-    )
-    fig.update_layout(hovermode="x unified", margin=dict(t=40, b=40, l=40, r=40))
+        sub, x="date", y="indeed_job_postings_index", color="display_name", line_dash="country_code",
+        title="ดัชนีประกาศงานรายสายอาชีพ (ฐาน ก.พ. 2020 = 100)",
+        labels={"date": "วันที่", "indeed_job_postings_index": "ดัชนีประกาศงาน", "country_code": "ประเทศ",
+                "display_name": "สายอาชีพ (Indeed)"},
+        category_orders={"display_name": sectors},
+        color_discrete_sequence=px.colors.qualitative.Bold)
+    fig.add_hline(y=100, line_dash="dot", line_color="gray", annotation_text="ฐาน = 100")
+    fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=40),
+                      legend=dict(orientation="h", y=-0.3, title=None))
+    return chart_card(title, fig, source_id="S01 (Indeed Hiring Lab, sector files)", license_name="CC BY 4.0",
+                      data_year=f"{year_range[0]}-{year_range[1]}", status="verified")
 
-    return chart_card(
-        "T2-1: ดัชนีความต้องการแรงงาน (Indeed Job Postings Index)",
-        fig,
-        source_id="S01 (Indeed Hiring Lab)",
-        license_name="CC BY 4.0",
-        data_year=f"{year_range[0]}-{year_range[1]}",
-        status="verified"
-    )
+
+def build_t2_5_ai_share(countries: list, year_range: list):
+    """T2-5: share of postings mentioning AI/GenAI (S02, real data)."""
+    title = "T2-5: สัดส่วนประกาศงานที่กล่าวถึง AI (Indeed AI Tracker)"
+    df = data_store.ai_tracker
+    if df.empty:
+        return empty_chart_card(title)
+    df = df.copy()
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    sub = df[df["jobcountry"].isin(countries) & (df["date"].dt.year >= year_range[0]) & (df["date"].dt.year <= year_range[1])]
+    if sub.empty:
+        return empty_chart_card(title, msg="Indeed AI Tracker ไม่มีข้อมูลประเทศที่เลือก (มี AU CA DE FR GB IE IT NL US)")
+    fig = px.line(sub.sort_values("date"), x="date", y="AI_share_postings", color="jobcountry",
+                  title="ประกาศงานที่กล่าวถึง AI (% ของประกาศทั้งหมด)",
+                  labels={"date": "เดือน", "AI_share_postings": "% ของประกาศงาน", "jobcountry": "ประเทศ"},
+                  color_discrete_sequence=px.colors.qualitative.Vivid)
+    fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=40))
+    return chart_card(title, fig, source_id="S02 (Indeed Hiring Lab AI Tracker)", license_name="CC BY 4.0",
+                      data_year=f"{year_range[0]}-{year_range[1]}", status="verified")
 
 def build_t2_2_skills(roles: list):
     """T2-2: ทักษะที่ตลาดต้องการตามกลุ่มสายงาน (S03 / S02)."""
@@ -96,46 +112,37 @@ def build_t2_2_skills(roles: list):
         status="sample"
     )
 
-def build_t2_3_employers(countries: list):
-    """T2-3: การจ้างงานจำแนกตามกลุ่มอาชีพ/อุตสาหกรรม (S14 Singapore MOM)."""
-    df_mom = data_store.sg_mom
-    if df_mom.empty or "SG" not in countries:
+def build_t2_3_employers(countries: list, year_range: list = None):
+    """T2-3: employed residents by occupation (S14 Singapore MOM). No open employer list exists."""
+    title = "T2-3: โครงสร้างการจ้างงานตามกลุ่มอาชีพ"
+    df = data_store.sg_mom
+    if df.empty or "SG" not in countries:
         return empty_chart_card(
-            "T2-3: โครงสร้างการจ้างงานตามกลุ่มอาชีพ",
-            msg="ไม่มีแหล่งข้อมูลรายชื่อบริษัทเปิด — แสดงสถิติตามกลุ่มอาชีพ (Singapore MOM S14) เมื่อเลือกประเทศ SG"
-        )
-
-    # Latest year
-    latest_yr = df_mom["year"].max()
-    sub = df_mom[
-        (df_mom["year"] == latest_yr) &
-        (df_mom["sex"] == "Total") &
-        (df_mom["highest_qualification_attained"] == "Total")
-    ].dropna(subset=["employed"]).copy()
-
+            title, msg="ไม่มีแหล่งข้อมูลรายชื่อบริษัทเปิด — แสดงสถิติตามกลุ่มอาชีพ (Singapore MOM S14) เมื่อเลือกประเทศ SG")
+    df = df.copy()
+    df["year"] = pd.to_numeric(df["year"], errors="coerce")
+    df["employed"] = pd.to_numeric(df["employed"], errors="coerce")
+    ymax = year_range[1] if year_range else int(df["year"].max())
+    yr = int(df[df["year"] <= ymax]["year"].max())
+    sub = df[(df["year"] == yr) & (df["highest_qualification_attained"] == "degree")]
+    sub = sub.groupby("occupation", as_index=False)["employed"].sum()  # male + female
+    sub = sub[sub["employed"] > 0]
     if sub.empty:
-        sub = df_mom.dropna(subset=["employed"]).head(10).copy()
+        return empty_chart_card(title)
+    fig = px.treemap(sub, path=["occupation"], values="employed", color="employed",
+                     color_continuous_scale="Viridis",
+                     title=f"ผู้มีงานทำวุฒิปริญญา แยกกลุ่มอาชีพ สิงคโปร์ (ปี {yr})")
+    fig.update_traces(texttemplate="%{label}<br>%{value:,.0f}")
+    fig.update_layout(margin=dict(t=50, b=20, l=20, r=20))
+    return chart_card(title, fig, source_id="S14 (Ministry of Manpower Singapore)",
+                      license_name="Singapore Open Data Licence v1.0", data_year=str(yr), status="verified")
 
-    sub = sub.sort_values(by="employed", ascending=False).head(10)
+_UNI_ABBR = {
+    "National University of Singapore": "NUS", "Nanyang Technological University": "NTU",
+    "Singapore Management University": "SMU", "Singapore University of Technology and Design": "SUTD",
+    "Singapore University of Social Sciences": "SUSS", "Singapore Institute of Technology": "SIT",
+}
 
-    fig = px.treemap(
-        sub,
-        path=["occupation"],
-        values="employed",
-        title=f"จำนวนผู้มีงานทำจำแนกตามกลุ่มอาชีพในสิงคโปร์ (ปี {latest_yr})",
-        color="employed",
-        color_continuous_scale="Viridis",
-    )
-    fig.update_layout(margin=dict(t=40, b=20, l=20, r=20))
-
-    return chart_card(
-        "T2-3: โครงสร้างการจ้างงานตามกลุ่มอาชีพ",
-        fig,
-        source_id="S14 (Ministry of Manpower Singapore)",
-        license_name="Singapore Open Data Licence v1.0",
-        data_year=str(latest_yr),
-        status="verified"
-    )
 
 def build_t2_4_salary(countries: list):
     """T2-4: ช่วงเงินเดือนเริ่มต้นและเปอร์เซ็นไทล์ (S15 Singapore GES)."""
@@ -146,32 +153,33 @@ def build_t2_4_salary(countries: list):
             msg="ไม่มีแหล่งข้อมูลเงินเดือนสาย AI/DS ของไทยที่เป็น Open Data (มีข้อมูลเริ่มต้นรายหลักสูตรของสิงคโปร์ S15 เมื่อเลือกประเทศ SG)"
         )
 
-    keyword_pat = "Data|Statistics|Computer|Analytics|Information"
+    keyword_pat = "Data Science|Statistic|Analytics|Artificial Intelligence|Computer Science|Computing|Information Systems"
     matched = df_ges[df_ges["degree"].str.contains(keyword_pat, case=False, na=False)].copy()
     if matched.empty:
         matched = df_ges.head(20).copy()
 
     latest_yr = matched["year"].max()
     sub = matched[matched["year"] == latest_yr].dropna(subset=["gross_monthly_median"]).copy()
-    sub = sub.sort_values(by="gross_monthly_median", ascending=True).tail(8)
+    sub = sub.sort_values(by="gross_monthly_median", ascending=True).tail(10)
+    sub["label"] = sub["university"].map(_UNI_ABBR).fillna(sub["university"]) + " · " + sub["degree"].str.slice(0, 38)
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        y=sub["degree"],
+        y=sub["label"],
         x=sub["gross_mthly_25_percentile"],
         name="ถึง P25",
         orientation="h",
         marker=dict(color="#3498DB")
     ))
     fig.add_trace(go.Bar(
-        y=sub["degree"],
+        y=sub["label"],
         x=sub["gross_monthly_median"] - sub["gross_mthly_25_percentile"],
         name="P25 → Median",
         orientation="h",
         marker=dict(color="#2ECC71")
     ))
     fig.add_trace(go.Bar(
-        y=sub["degree"],
+        y=sub["label"],
         x=sub["gross_mthly_75_percentile"] - sub["gross_monthly_median"],
         name="Median → P75",
         orientation="h",
@@ -180,11 +188,10 @@ def build_t2_4_salary(countries: list):
 
     fig.update_layout(
         barmode="stack",
-        title=f"เงินเดือนบัณฑิตจบใหม่รายเดือน (SGD) P25/Median/P75 (ปี {latest_yr}) — ไม่ใช่ระดับ Entry/Mid/Senior",
+        title=f"เงินเดือนบัณฑิตจบใหม่ (SGD/เดือน) P25–Median–P75 ปี {latest_yr}",
         xaxis=dict(title="เงินเดือนรวมรายเดือน (SGD)"),
-        yaxis=dict(title="หลักสูตร"),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        margin=dict(t=60, b=40, l=150, r=40)
+        margin=dict(t=70, b=40, l=10, r=20), yaxis=dict(automargin=True, title=None)
     )
 
     return chart_card(

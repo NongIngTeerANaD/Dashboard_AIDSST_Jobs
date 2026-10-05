@@ -93,7 +93,8 @@ def build_t1_2_courses(countries: list, degrees: list, roles: list, program_id: 
 
     fig = px.sunburst(
         merged,
-        path=["program_name_th", "category", "skill_name", "course_name"],
+        path=["program_name_th", "category", "skill_name"],
+        maxdepth=3,
         values="credits",
         title="สัดส่วนหน่วยกิตรายวิชาจำแนกตามหมวดทักษะ (Sunburst)",
         color="category",
@@ -121,7 +122,7 @@ def build_t1_3_employment(countries: list):
         )
 
     # Filter tech/stat/data degrees
-    keyword_pat = "Data|Statistics|Computer|Analytics|Information"
+    keyword_pat = "Data Science|Statistic|Analytics|Artificial Intelligence|Computer Science|Computing|Information Systems"
     matched = df_ges[df_ges["degree"].str.contains(keyword_pat, case=False, na=False)].copy()
     if matched.empty:
         matched = df_ges.head(20).copy()
@@ -129,7 +130,11 @@ def build_t1_3_employment(countries: list):
     # Aggregate by degree (latest year)
     latest_yr = matched["year"].max()
     sub = matched[matched["year"] == latest_yr].dropna(subset=["employment_rate_overall"])
-    sub = sub.sort_values(by="employment_rate_overall", ascending=True).tail(10)
+    sub = sub.sort_values(by="employment_rate_overall", ascending=True).tail(12)
+    abbr = {"National University of Singapore": "NUS", "Nanyang Technological University": "NTU",
+            "Singapore Management University": "SMU", "Singapore University of Technology and Design": "SUTD",
+            "Singapore University of Social Sciences": "SUSS", "Singapore Institute of Technology": "SIT"}
+    sub["degree"] = sub["university"].map(abbr).fillna(sub["university"]) + " · " + sub["degree"].str.slice(0, 38)
 
     fig = px.bar(
         sub,
@@ -143,7 +148,8 @@ def build_t1_3_employment(countries: list):
         color_discrete_sequence=px.colors.qualitative.Pastel
     )
     fig.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
-    fig.update_layout(margin=dict(t=40, b=40, l=150, r=40))
+    fig.update_layout(margin=dict(t=40, b=40, l=10, r=60), yaxis=dict(automargin=True, title=None),
+                      xaxis=dict(range=[0, 108]), legend=dict(orientation="h", y=-0.2, title=None))
 
     return chart_card(
         "T1-3: อัตราการมีงานทำของบัณฑิตหลังจบการศึกษา",

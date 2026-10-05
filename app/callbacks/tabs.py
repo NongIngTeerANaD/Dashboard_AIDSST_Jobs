@@ -8,6 +8,7 @@ from app.charts.tab1_charts import (
     build_t1_4_tuition,
 )
 from app.charts.tab2_charts import (
+    build_t2_5_ai_share,
     build_t2_1_postings,
     build_t2_2_skills,
     build_t2_3_employers,
@@ -46,7 +47,7 @@ def effective(filters: dict, selection: dict, keep_country: bool = False):
 def render_tab1_view(filters: dict, selection: dict = None):
     filters_sel, pid = effective(filters, selection)
     countries = filters.get("country", ["TH", "SG", "US"])
-    year_range = [filters.get("year_start", 2020), filters.get("year_end", 2025)]
+    year_range = [filters.get("year_start", 2020), filters.get("year_end", 2026)]
     degrees = filters.get("degree", ["bachelor", "master"])
     roles = filters.get("role", ["ai_ml", "data_science", "statistics", "data_analyst"])
 
@@ -65,17 +66,20 @@ def render_tab2_view(filters: dict, selection: dict = None):
     # Tab 2: narrow to the program role family only (open job-market data does not exist for every country)
     filters, _ = effective(filters, selection, keep_country=True)
     countries = filters.get("country", ["TH", "SG", "US"])
-    year_range = [filters.get("year_start", 2020), filters.get("year_end", 2025)]
+    year_range = [filters.get("year_start", 2020), filters.get("year_end", 2026)]
     roles = filters.get("role", ["ai_ml", "data_science", "statistics", "data_analyst"])
 
     return dbc.Container([
         dbc.Row([
-            dbc.Col(build_t2_1_postings(countries, year_range), lg=6, className="mb-4"),
+            dbc.Col(build_t2_1_postings(countries, year_range, roles), lg=6, className="mb-4"),
             dbc.Col(build_t2_2_skills(roles), lg=6, className="mb-4"),
         ]),
         dbc.Row([
-            dbc.Col(build_t2_3_employers(countries), lg=6, className="mb-4"),
+            dbc.Col(build_t2_3_employers(countries, year_range), lg=6, className="mb-4"),
             dbc.Col(build_t2_4_salary(countries), lg=6, className="mb-4"),
+        ]),
+        dbc.Row([
+            dbc.Col(build_t2_5_ai_share(countries, year_range), lg=6, className="mb-4"),
         ])
     ], fluid=True, className="p-0")
 
@@ -113,7 +117,7 @@ def update_tab_content(active_tab, filters, selection):
         filters = {
             "country": ["TH", "SG", "US"],
             "year_start": 2020,
-            "year_end": 2025,
+            "year_end": 2026,
             "degree": ["bachelor", "master"],
             "role": ["ai_ml", "data_science", "statistics", "data_analyst"],
         }

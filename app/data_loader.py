@@ -24,6 +24,7 @@ class DataLoader:
 
         # 2. Processed Open Data
         self.job_postings = self._read_parquet(PROCESSED_DIR / "s01_job_postings.parquet")
+        self.sector_postings = self._read_parquet(PROCESSED_DIR / "s01_sector_postings.parquet")
         self.ai_tracker = self._read_parquet(PROCESSED_DIR / "s02_ai_tracker.parquet")
         self.sg_mom = self._read_parquet(PROCESSED_DIR / "s14_sg_mom.parquet")
         self.sg_ges = self._read_parquet(PROCESSED_DIR / "s15_sg_ges.parquet")

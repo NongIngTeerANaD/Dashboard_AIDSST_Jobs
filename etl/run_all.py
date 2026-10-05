@@ -18,6 +18,7 @@ log = logging.getLogger(__name__)
 # Ordered list: (fetch_module, clean_module, source_id)
 PIPELINE: list[tuple[str, str, str]] = [
     ("etl.fetch_s01_indeed_postings",  "etl.clean_s01", "S01"),
+    ("etl.fetch_s01_sector",          "etl.clean_s01_sector", "S01-sector"),
     ("etl.fetch_s02_indeed_ai",        "etl.clean_s02", "S02"),
     ("etl.fetch_s03_onet",             "etl.clean_s03", "S03"),
     ("etl.fetch_s05_stackoverflow",    "etl.clean_s05", "S05"),
