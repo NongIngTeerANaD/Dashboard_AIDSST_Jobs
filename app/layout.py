@@ -38,119 +38,99 @@ _ROLE_OPTIONS = [
     {"label": "Data Analyst / Engineer",      "value": "data_analyst"},
 ]
 
-filter_bar = dbc.Card(
-    dbc.CardBody([
-        dbc.Row([
-            dbc.Col([
-                html.Label("ประเทศ / ภูมิภาค", className="fw-bold text-dark"),
-                dcc.Dropdown(
-                    id="filter-country",
-                    options=_COUNTRY_OPTIONS,
-                    value=DEFAULT_FILTERS["country"],
-                    multi=True,
-                    placeholder="เลือกประเทศ…",
-                ),
-            ], md=3),
-            dbc.Col([
-                html.Label("ช่วงปี (2018 - 2026)", className="fw-bold text-dark"),
-                dcc.RangeSlider(
-                    id="filter-year",
-                    min=2018, max=2026, step=1,
-                    value=[DEFAULT_FILTERS["year_start"], DEFAULT_FILTERS["year_end"]],
-                    marks={y: str(y) for y in range(2018, 2027)},
-                    tooltip={"placement": "bottom", "always_visible": False},
-                ),
-            ], md=3),
-            dbc.Col([
-                html.Label("ระดับการศึกษา", className="fw-bold text-dark"),
-                dcc.Dropdown(
-                    id="filter-degree",
-                    options=_DEGREE_OPTIONS,
-                    value=DEFAULT_FILTERS["degree"],
-                    multi=True,
-                    placeholder="เลือกระดับ…",
-                ),
-            ], md=3),
-            dbc.Col([
-                html.Label("กลุ่มสายงาน", className="fw-bold text-dark"),
-                dcc.Dropdown(
-                    id="filter-role",
-                    options=_ROLE_OPTIONS,
-                    value=DEFAULT_FILTERS["role"],
-                    multi=True,
-                    placeholder="เลือกสายงาน…",
-                ),
-            ], md=3),
-        ], className="mb-2"),
-        # Active filter chips row
-        dbc.Row([
-            dbc.Col(html.Div(id="filter-chips", className="d-flex flex-wrap gap-1 align-items-center"), md=8),
-            dbc.Col([
-                dbc.Button("ล้างการเลือกหลักสูตร", id="btn-clear-selection", color="warning",
-                           size="sm", outline=True, className="me-2"),
-                dbc.Button("รีเซ็ตตัวกรอง", id="btn-clear-all", color="secondary",
-                           size="sm", outline=True),
-            ], md=4, className="text-end"),
-        ]),
+filter_bar = html.Div([
+    dbc.Row([
+        dbc.Col([html.Label("ประเทศ / ภูมิภาค"),
+                 dcc.Dropdown(id="filter-country", options=_COUNTRY_OPTIONS, value=DEFAULT_FILTERS["country"], multi=True, placeholder="เลือกประเทศ…")], md=3),
+        dbc.Col([html.Label("ช่วงปี"),
+                 dcc.RangeSlider(id="filter-year", min=2018, max=2026, step=1,
+                                 value=[DEFAULT_FILTERS["year_start"], DEFAULT_FILTERS["year_end"]],
+                                 marks={y: str(y) for y in range(2018, 2027)},
+                                 tooltip={"placement": "bottom", "always_visible": False})], md=3),
+        dbc.Col([html.Label("ระดับการศึกษา"),
+                 dcc.Dropdown(id="filter-degree", options=_DEGREE_OPTIONS, value=DEFAULT_FILTERS["degree"], multi=True, placeholder="เลือกระดับ…")], md=3),
+        dbc.Col([html.Label("กลุ่มสายงาน"),
+                 dcc.Dropdown(id="filter-role", options=_ROLE_OPTIONS, value=DEFAULT_FILTERS["role"], multi=True, placeholder="เลือกสายงาน…")], md=3),
+    ], className="mb-2"),
+    dbc.Row([
+        dbc.Col(html.Div(id="filter-chips", className="d-flex flex-wrap gap-1 align-items-center"), md=8),
+        dbc.Col([
+            dbc.Button("ล้างการเลือกหลักสูตร", id="btn-clear-selection", color="warning", size="sm", outline=True, className="me-2"),
+            dbc.Button("รีเซ็ตตัวกรอง", id="btn-clear-all", color="secondary", size="sm", outline=True),
+        ], md=4, className="text-end"),
     ]),
-    className="mb-4 shadow-sm border-0 bg-light",
-)
+], className="filterbar")
 
-layout = dbc.Container([
-    # Store for filter state with initial default data
+_NAV = [("nav-tab-1", "tab-1", "bi bi-mortarboard", "Tab 1 · ผู้สำเร็จการศึกษา"),
+        ("nav-tab-2", "tab-2", "bi bi-briefcase", "Tab 2 · ตลาดงาน"),
+        ("nav-tab-3", "tab-3", "bi bi-bar-chart-line", "Tab 3 · Skill Mismatch"),
+        ("nav-tab-4", "tab-4", "bi bi-journal-text", "แหล่งข้อมูล & ระเบียบวิธี")]
+
+
+def _programs_options():
+    from app.data_loader import data_store
+    df = data_store.programs
+    if df.empty:
+        return []
+    return [{"label": r.program_name_th, "value": r.program_id} for r in df.itertuples()]
+
+
+def _sample_warnings():
+    from app.data_loader import data_store
+    items = []
+    for name in ["programs", "graduates", "courses", "tuition"]:
+        df = getattr(data_store, name)
+        if not df.empty and "source_id" in df and (df["source_id"] == "SAMPLE_DEMO").any():
+            items.append(f"data/curated/{name}.csv: {(df['source_id'] == 'SAMPLE_DEMO').sum()} แถวเป็นตัวอย่างสาธิต")
+    return items
+
+
+sidebar = html.Div([
+    html.Div("AI", className="brand"),
+    *[dbc.Button(html.I(className=ico), id=nid, className="nav-ico", title=title, n_clicks=0) for nid, _, ico, title in _NAV],
+    html.Div(className="spacer"),
+    html.A(html.I(className="bi bi-github"), href="https://github.com/NongIngTeerANaD/Dashboard_AIDSST_Jobs", target="_blank",
+           className="nav-ico", title="GitHub"),
+], className="sidebar")
+
+_warn = _sample_warnings()
+topbar = html.Div([
+    html.Div([html.Div("AIDSST·Jobs", className="logo"), html.Div("Dashboard", className="page")]),
+    html.Div(html.Div([html.I(className="bi bi-search"),
+                       dcc.Dropdown(id="search-program", options=_programs_options(), placeholder="ค้นหาหลักสูตร…", clearable=True)],
+                      className="searchbar"), className="grow"),
+    html.Span([html.I(), "TH"], className="chip-country", title="ตลาดเป้าหมาย: ประเทศไทย"),
+    html.Div([
+        dbc.Button([html.I(className="bi bi-bell"), html.Span(className="dot") if _warn else None], id="btn-bell", className="bell", n_clicks=0),
+        dbc.Popover([dbc.PopoverHeader("การแจ้งเตือนข้อมูล"),
+                     dbc.PopoverBody([html.Div("🧪 ข้อมูลตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง):", className="fw-semibold mb-1"),
+                                      html.Ul([html.Li(w) for w in _warn] or [html.Li("ไม่มี")], className="small ps-3 mb-0")])],
+                    target="btn-bell", trigger="legacy", placement="bottom"),
+    ]),
+    html.Div([html.Div("TK", className="avatar"), html.Span("สวัสดี Teeranad")], className="hello"),
+], className="topbar")
+
+layout = html.Div([
     dcc.Store(id="store-filters", data=DEFAULT_FILTERS),
     dcc.Store(id="store-selection", data={"program_id": None}),
     dcc.Download(id="download-mismatch"),
     dcc.Location(id="url", refresh=False),
-
-    # Header Banner
-    dbc.Row(dbc.Col([
-        html.Div([
-            html.H2(
-                "Dashboard วิเคราะห์ตลาดงานและ Skill Mismatch",
-                className="fw-bold text-primary mb-1",
-            ),
-            html.P(
-                "สายงาน AI / Data Science / Statistics · ข้อมูลจากแหล่งเปิดที่ตรวจสอบแล้ว (S01–S15) และข้อมูลหลักสูตร Curated",
-                className="text-muted mb-0",
-            ),
-        ], className="py-3")
-    ])),
-
-    dbc.Alert([
-        html.Strong("⚠️ ข้อมูลบางส่วนเป็นตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง): "),
-        "จำนวนผู้จบรายหลักสูตร รายวิชา และค่าเทอม (กราฟที่ติดป้าย 🧪 รวม Tab 3 ฝั่งหลักสูตร) · "
-        "ข้อมูลจริง (✅): Indeed (S01/S02), O*NET (S03), World Bank (S07), Eurostat (S08/S09), สิงคโปร์ MOM/GES (S14/S15) · "
-        "เคล็ดลับ: คลิกแท่งหลักสูตรใน T1-1 หรือคอลัมน์ใน T3-2 เพื่อกรองทุกกราฟในทุกแท็บ",
-    ], color="warning", className="py-2 small"),
-
-    # Global filter bar
-    filter_bar,
-
-    # Navigation Tabs
-    dbc.Tabs([
-        dbc.Tab(label="Tab 1 · ผู้สำเร็จการศึกษา & Skill ที่เรียน", tab_id="tab-1", label_class_name="fw-semibold"),
-        dbc.Tab(label="Tab 2 · ตลาดงาน & Skill ที่ต้องการ", tab_id="tab-2", label_class_name="fw-semibold"),
-        dbc.Tab(label="Tab 3 · Skill Mismatch (วิเคราะห์ช่องว่างทักษะ)", tab_id="tab-3", label_class_name="fw-semibold"),
-        dbc.Tab(label="แหล่งข้อมูล & ระเบียบวิธี", tab_id="tab-4", label_class_name="fw-semibold"),
-    ], id="main-tabs", active_tab="tab-1", className="mb-3"),
-
-    # Single container for active tab content (Never unmounted!)
-    dcc.Loading(
-        id="loading-main",
-        type="circle",
-        color="#3498DB",
-        children=html.Div(id="tab-content", className="py-2")
-    ),
-
-    html.Hr(className="mt-5"),
-    html.Footer(
-        html.Div([
-            html.Small(
-                "ระบบวิเคราะห์ตลาดงานและทักษะ · ผู้ขอ: นักศึกษาสถิติ ปี 4 มหาวิทยาลัยขอนแก่น · "
-                "ข้อมูลเปิดมาตรฐาน Open Data: CC BY 4.0, Singapore Open Data Licence, O*NET, Eurostat",
-                className="text-muted"
-            )
-        ], className="text-center py-3"),
-    ),
-], fluid=True, className="px-4 py-2")
+    sidebar,
+    html.Div([
+        topbar,
+        html.Div(id="hero-card"),
+        html.Div([html.Strong("🧪 ข้อมูลบางส่วนเป็นตัวอย่างสาธิต: "),
+                  "จำนวนผู้จบรายหลักสูตร รายวิชา ค่าเทอม และฝั่งหลักสูตรของ Tab 3 · ข้อมูลจริง (✅): Indeed, O*NET, World Bank, Eurostat, สิงคโปร์ MOM/GES · "
+                  "คลิกแท่งหลักสูตรใน T1-1 / คอลัมน์ใน T3-2 หรือค้นหาหลักสูตรด้านบนเพื่อกรองทุกกราฟ"], className="alert-soft"),
+        filter_bar,
+        dbc.Tabs([
+            dbc.Tab(label="Tab 1 · ผู้สำเร็จการศึกษา & Skill ที่เรียน", tab_id="tab-1"),
+            dbc.Tab(label="Tab 2 · ตลาดงาน & Skill ที่ต้องการ", tab_id="tab-2"),
+            dbc.Tab(label="Tab 3 · Skill Mismatch", tab_id="tab-3"),
+            dbc.Tab(label="แหล่งข้อมูล & ระเบียบวิธี", tab_id="tab-4"),
+        ], id="main-tabs", active_tab="tab-1", className="mb-3"),
+        dcc.Loading(id="loading-main", type="circle", color="#8B5CF6", children=html.Div(id="tab-content", className="py-2")),
+        html.Div("AIDSST·Jobs · ผู้ขอ: นักศึกษาสถิติ ปี 4 มหาวิทยาลัยขอนแก่น · ข้อมูลเปิด: CC BY 4.0, Singapore Open Data Licence, O*NET, Eurostat, OGL",
+                 className="footer-note"),
+    ], className="main"),
+])

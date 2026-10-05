@@ -1,13 +1,18 @@
 ﻿"""Create Dash app instance and expose Flask server."""
+import os
 import dash
 import dash_bootstrap_components as dbc
+import app.theme  # noqa: F401  (registers the default Plotly template)
+
+_ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
 
 dash_app = dash.Dash(
     __name__,
+    assets_folder=_ASSETS,
     use_pages=False,
-    external_stylesheets=[dbc.themes.FLATLY],
+    external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.BOOTSTRAP],
     suppress_callback_exceptions=True,
-    title="Dashboard: AI/DS/Stat Skill Mismatch",
+    title="AIDSST Jobs · Skill Mismatch Dashboard",
 )
 server = dash_app.server
 

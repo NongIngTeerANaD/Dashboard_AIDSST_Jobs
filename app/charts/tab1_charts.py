@@ -39,7 +39,6 @@ def build_t1_1_graduates(countries: list, year_range: list, degrees: list, roles
         barmode="group",
         title="จำนวนผู้สำเร็จการศึกษาจำแนกตามหลักสูตรและรายปี (คน)",
         labels={"year": "ปี", "graduates_count": "จำนวนผู้จบ (คน)", "program_name_th": "หลักสูตร"},
-        color_discrete_sequence=px.colors.qualitative.Bold,
         text="graduates_count",
         custom_data=["program_id"],
     )
@@ -98,7 +97,6 @@ def build_t1_2_courses(countries: list, degrees: list, roles: list, program_id: 
         values="credits",
         title="สัดส่วนหน่วยกิตรายวิชาจำแนกตามหมวดทักษะ (Sunburst)",
         color="category",
-        color_discrete_sequence=px.colors.qualitative.Prism,
     )
     fig.update_layout(margin=dict(t=40, b=20, l=20, r=20))
 
@@ -144,8 +142,7 @@ def build_t1_3_employment(countries: list):
         color="university",
         title=f"อัตราการมีงานทำภาพรวมหลังจบ ~6 เดือน (ปี {latest_yr})",
         labels={"employment_rate_overall": "อัตราการได้งาน (%)", "degree": "หลักสูตร", "university": "มหาวิทยาลัย"},
-        text="employment_rate_overall",
-        color_discrete_sequence=px.colors.qualitative.Pastel
+        text="employment_rate_overall"
     )
     fig.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
     fig.update_layout(margin=dict(t=40, b=40, l=10, r=60), yaxis=dict(automargin=True, title=None),
@@ -191,8 +188,7 @@ def build_t1_4_tuition(countries: list, degrees: list, roles: list, program_id: 
         color="institution",
         title="ค่าธรรมเนียมการศึกษาตลอดหลักสูตร (บาท)",
         labels={"total_program": "ค่าเทอมตลอดหลักสูตร (THB)", "program_name_th": "หลักสูตร", "institution": "สถาบัน"},
-        text="total_program",
-        color_discrete_sequence=px.colors.qualitative.Safe
+        text="total_program"
     )
     fig.update_traces(texttemplate="%{text:,.0f} ฿", textposition="outside")
     fig.update_layout(margin=dict(t=40, b=60, l=50, r=40))
@@ -225,8 +221,7 @@ def build_t1_5_grad_unemployment(countries: list, year_range: list):
     sub = sub.sort_values(["country", "year"])
     fig = px.line(sub, x="year", y="unemployment_rate_pct", color="country", markers=True,
                   title="อัตราว่างงานของผู้มีการศึกษาระดับสูง (% ของกำลังแรงงานกลุ่มนี้)",
-                  labels={"year": "ปี", "unemployment_rate_pct": "อัตราว่างงาน (%)", "country": "ประเทศ"},
-                  color_discrete_sequence=px.colors.qualitative.Bold)
+                  labels={"year": "ปี", "unemployment_rate_pct": "อัตราว่างงาน (%)", "country": "ประเทศ"})
     fig.update_xaxes(dtick=1)
     fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=20), legend=dict(orientation="h", y=-0.25, title=None))
     last = int(sub["year"].max())
@@ -258,8 +253,7 @@ def build_t1_6_eu_graduates(countries: list, year_range: list, degrees: list):
     fig = px.line(sub.sort_values("year"), x="year", y="graduates", color="สาขา", line_dash="ระดับ",
                   facet_col="พื้นที่", facet_col_wrap=3, markers=True,
                   title="ผู้สำเร็จการศึกษา (คน/ปี) แยกสาขาและระดับ",
-                  labels={"year": "ปี", "graduates": "จำนวนผู้จบ (คน)"},
-                  color_discrete_sequence=px.colors.qualitative.Bold)
+                  labels={"year": "ปี", "graduates": "จำนวนผู้จบ (คน)"})
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_xaxes(dtick=2)
     fig.update_yaxes(matches=None)

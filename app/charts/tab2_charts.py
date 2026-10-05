@@ -41,8 +41,7 @@ def build_t2_1_postings(countries: list, year_range: list, roles: list = None):
         title="ดัชนีประกาศงานรายสายอาชีพ (ฐาน ก.พ. 2020 = 100)",
         labels={"date": "วันที่", "indeed_job_postings_index": "ดัชนีประกาศงาน", "country_code": "ประเทศ",
                 "display_name": "สายอาชีพ (Indeed)"},
-        category_orders={"display_name": sectors},
-        color_discrete_sequence=px.colors.qualitative.Bold)
+        category_orders={"display_name": sectors})
     fig.add_hline(y=100, line_dash="dot", line_color="gray", annotation_text="ฐาน = 100")
     fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=40),
                       legend=dict(orientation="h", y=-0.3, title=None))
@@ -65,8 +64,7 @@ def build_t2_6_ict_specialists(countries: list, year_range: list):
     sub = sub.assign(area=sub["country_code"].replace({"EU27_2020": "EU27 (ค่ารวม)", "UK": "UK (ถึงปีที่ Eurostat มีข้อมูล)"}))
     fig = px.line(sub.sort_values(["area", "year"]), x="year", y="ict_specialists_pct", color="area", markers=True,
                   title="ผู้เชี่ยวชาญด้าน ICT (% ของการจ้างงานทั้งหมด)",
-                  labels={"year": "ปี", "ict_specialists_pct": "% ของการจ้างงาน", "area": "ประเทศ/ภูมิภาค"},
-                  color_discrete_sequence=px.colors.qualitative.Vivid)
+                  labels={"year": "ปี", "ict_specialists_pct": "% ของการจ้างงาน", "area": "ประเทศ/ภูมิภาค"})
     fig.update_xaxes(dtick=1)
     fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=20), legend=dict(orientation="h", y=-0.25, title=None))
     return chart_card(title, fig, source_id="S08 (Eurostat isoc_sks_itspt)", license_name="Eurostat reuse policy",
@@ -86,8 +84,7 @@ def build_t2_5_ai_share(countries: list, year_range: list):
         return empty_chart_card(title, msg="Indeed AI Tracker ไม่มีข้อมูลประเทศที่เลือก (มี AU CA DE FR GB IE IT NL US)")
     fig = px.line(sub.sort_values("date"), x="date", y="AI_share_postings", color="jobcountry",
                   title="ประกาศงานที่กล่าวถึง AI (% ของประกาศทั้งหมด)",
-                  labels={"date": "เดือน", "AI_share_postings": "% ของประกาศงาน", "jobcountry": "ประเทศ"},
-                  color_discrete_sequence=px.colors.qualitative.Vivid)
+                  labels={"date": "เดือน", "AI_share_postings": "% ของประกาศงาน", "jobcountry": "ประเทศ"})
     fig.update_layout(hovermode="x unified", margin=dict(t=50, b=40, l=40, r=40))
     return chart_card(title, fig, source_id="S02 (Indeed Hiring Lab AI Tracker)", license_name="CC BY 4.0",
                       data_year=f"{year_range[0]}-{year_range[1]}", status="verified")
@@ -120,8 +117,7 @@ def build_t2_2_skills(roles: list):
             "skill_name": "ทักษะ / เครื่องมือ",
             "category": "หมวดหมู่"
         },
-        text="importance_or_freq",
-        color_discrete_sequence=px.colors.qualitative.Set2
+        text="importance_or_freq"
     )
     fig.update_traces(texttemplate="%{text:.2f}", textposition="outside")
     fig.update_layout(margin=dict(t=40, b=40, l=10, r=40), yaxis=dict(automargin=True, title=None), xaxis=dict(range=[0, 1.15]))
@@ -164,7 +160,7 @@ def build_t2_3_employers(countries: list, year_range: list = None):
     if sub.empty:
         return empty_chart_card(title)
     fig = px.treemap(sub, path=["occupation"], values="employed", color="employed",
-                     color_continuous_scale="Viridis",
+                     color_continuous_scale=["#FFD6E5", "#B58CFF", "#30A0E0"],
                      title=f"ผู้มีงานทำวุฒิปริญญา แยกกลุ่มอาชีพ สิงคโปร์ (ปี {yr})")
     fig.update_traces(texttemplate="%{label}<br>%{value:,.0f}")
     fig.update_layout(margin=dict(t=50, b=20, l=20, r=20))
@@ -203,21 +199,21 @@ def build_t2_4_salary(countries: list):
         x=sub["gross_mthly_25_percentile"],
         name="ถึง P25",
         orientation="h",
-        marker=dict(color="#3498DB")
+        marker=dict(color="#30A0E0")
     ))
     fig.add_trace(go.Bar(
         y=sub["label"],
         x=sub["gross_monthly_median"] - sub["gross_mthly_25_percentile"],
         name="P25 → Median",
         orientation="h",
-        marker=dict(color="#2ECC71")
+        marker=dict(color="#8B5CF6")
     ))
     fig.add_trace(go.Bar(
         y=sub["label"],
         x=sub["gross_mthly_75_percentile"] - sub["gross_monthly_median"],
         name="Median → P75",
         orientation="h",
-        marker=dict(color="#F39C12")
+        marker=dict(color="#E02020")
     ))
 
     fig.update_layout(

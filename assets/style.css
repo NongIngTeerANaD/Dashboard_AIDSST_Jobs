@@ -1,0 +1,100 @@
+/* Soft-UI / glassmorphism theme: white base, large radii, floating shadows, fluid gradient hero */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap');
+:root{
+  --ink:#1B1B1F; --muted:#8A8A93; --line:#F0F0F0; --red:#E02020; --blue:#30A0E0; --purple:#8B5CF6;
+  --grad:linear-gradient(120deg,#FF8FB1 0%,#B58CFF 45%,#6EC1FF 100%);
+  --shadow:0 10px 30px rgba(0,0,0,.05); --radius:24px;
+}
+html,body{background:#fff;color:var(--ink);font-family:'Inter','Noto Sans Thai','Segoe UI',sans-serif;}
+body{margin:0}
+h1,h2,h3,h4,h5,h6{font-family:inherit;color:var(--ink);letter-spacing:-.01em}
+
+/* ---------- Sidebar ---------- */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:84px;background:#fff;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;padding:22px 0;gap:14px;z-index:50}
+.sidebar .brand{width:44px;height:44px;border-radius:14px;background:var(--grad);display:flex;align-items:center;
+  justify-content:center;color:#fff;font-weight:800;margin-bottom:18px;box-shadow:0 8px 20px rgba(139,92,246,.35)}
+.nav-ico{width:46px;height:46px;border-radius:50%;border:0;background:transparent;color:#6b6b75;display:flex;
+  align-items:center;justify-content:center;font-size:1.15rem;transition:.2s}
+.nav-ico:hover{background:#f6f6f8;color:var(--ink)}
+.nav-ico.active{background:#111;color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.sidebar .spacer{flex:1}
+
+/* ---------- Main + header ---------- */
+.main{margin-left:84px;padding:20px 32px 40px}
+.topbar{display:flex;align-items:center;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+.topbar .logo{font-weight:800;font-size:1.25rem}
+.topbar .page{color:var(--muted);font-size:.9rem}
+.topbar .grow{flex:1;display:flex;justify-content:center;min-width:260px}
+.searchbar{width:min(520px,100%);position:relative}
+.searchbar .bi{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);z-index:2;pointer-events:none}
+.searchbar .dash-dropdown,.searchbar .Select-control{border-radius:999px!important;border:1px solid var(--line)!important;background:#fafafa}
+.searchbar .dash-dropdown{padding-left:30px}
+.hello{display:flex;align-items:center;gap:10px;font-weight:600}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;
+  justify-content:center;font-weight:700;font-size:.85rem}
+.bell{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.bell .dot{position:absolute;top:9px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--red);border:2px solid #fff}
+.chip-country{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+  font-size:.8rem;font-weight:600;background:#fff}
+.chip-country i{width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block}
+
+/* ---------- Cards ---------- */
+.card{border:0!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;background:#fff}
+.card-header{background:transparent!important;border-bottom:1px solid var(--line)!important;padding:18px 24px 12px}
+.card-header h5{font-weight:600;font-size:1.02rem;color:var(--ink)!important;margin:0}
+.card-body{padding:14px 20px 18px}
+.card small{font-size:.74rem}
+
+/* ---------- Hero (gradient + glass) ---------- */
+.hero{position:relative;overflow:hidden;border-radius:30px;padding:26px;min-height:240px;background:#fdf4ff;box-shadow:var(--shadow);margin-bottom:22px}
+.hero .blob{position:absolute;filter:blur(38px);opacity:.9;border-radius:50%;animation:float 14s ease-in-out infinite alternate}
+.hero .b1{width:360px;height:300px;left:-60px;top:-80px;background:#FF8FB1}
+.hero .b2{width:420px;height:320px;left:34%;top:30px;background:#B58CFF;animation-delay:-4s}
+.hero .b3{width:380px;height:300px;right:-80px;top:-60px;background:#6EC1FF;animation-delay:-8s}
+.hero .b4{width:260px;height:200px;left:20%;bottom:-90px;background:#FFC1E3;animation-delay:-2s}
+@keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,-20px) scale(1.12)}}
+.glass{position:relative;background:rgba(255,255,255,.38);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid rgba(255,255,255,.65);border-radius:24px;padding:20px 24px;box-shadow:0 8px 32px rgba(120,80,200,.15)}
+.hero h3{font-weight:700;font-size:1.25rem;margin:0 0 2px}
+.hero .sub{color:#4a4a55;font-size:.85rem;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.kpi{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:14px 16px}
+.kpi .lbl{font-size:.78rem;color:#55555f}
+.kpi .val{font-size:1.9rem;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+.kpi .src{font-size:.7rem;color:#6a6a74}
+.delta{display:inline-block;font-size:.75rem;font-weight:700;border-radius:999px;padding:2px 9px;margin-left:6px}
+.delta.up{color:var(--red);background:rgba(224,32,32,.1)}
+.delta.down{color:var(--blue);background:rgba(48,160,224,.12)}
+.cover{margin-top:16px}
+.cover .row1{display:flex;justify-content:space-between;font-size:.8rem;color:#44444d;margin-bottom:6px}
+.progress-track{height:10px;border-radius:999px;background:rgba(255,255,255,.65);overflow:hidden}
+.progress-fill{height:100%;border-radius:999px;background:var(--grad)}
+
+/* ---------- Filter bar ---------- */
+.filterbar{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 22px;margin-bottom:18px}
+.filterbar label{font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+.filterbar .dash-dropdown,.filterbar .Select-control{border-radius:14px!important;border-color:var(--line)!important}
+.rc-slider-track{background:var(--grad)!important}
+.rc-slider-handle{border-color:var(--purple)!important}
+
+/* ---------- Buttons / pill segmented control ---------- */
+.btn{border-radius:999px!important;font-weight:600;font-size:.82rem}
+.btn-dark-pill,.btn-primary{background:#111!important;border-color:#111!important;color:#fff!important}
+.btn-outline-secondary,.btn-outline-warning,.btn-outline-primary{border-color:#e4e4e8!important;color:var(--ink)!important;background:#fff!important}
+.nav-tabs{border:0!important;background:#f4f4f6;border-radius:999px;padding:5px;display:inline-flex;gap:4px;flex-wrap:wrap}
+.nav-tabs .nav-link{border:0!important;border-radius:999px!important;color:#4a4a55;font-weight:600;font-size:.86rem;padding:8px 18px}
+.nav-tabs .nav-link.active{background:#111!important;color:#fff!important}
+.badge{border-radius:999px!important;font-weight:600}
+.alert-soft{background:#FFF7E6;border:1px solid #FFE3A8;border-radius:18px;padding:10px 16px;font-size:.8rem;color:#6b4e00;margin-bottom:18px}
+.footer-note{color:var(--muted);font-size:.78rem;text-align:center;padding:24px 0 0}
+.table{--bs-table-bg:transparent}
+@media(max-width:900px){.sidebar{display:none}.main{margin-left:0;padding:16px}}
+
+/* Icon buttons: neutralise Bootstrap .btn-primary (black) so only .active is black */
+.btn.nav-ico{background:transparent;color:#6b6b75;border:0;padding:0}
+.btn.nav-ico:hover{background:#f6f6f8;color:var(--ink)}
+.btn.nav-ico.active{background:#111;color:#fff}
+.btn.bell{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.bell:hover{background:#f6f6f8}

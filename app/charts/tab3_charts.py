@@ -142,9 +142,9 @@ def build_t3_3_quadrant(mismatch_df: pd.DataFrame):
         title="การกระจายตัวของทักษะ: แกน X = สัดส่วนที่สอน (s), แกน Y = สัดส่วนที่ตลาดต้องการ (d)",
         labels={"s": "สัดส่วนที่สอน (Supply Share s)", "d": "สัดส่วนที่ตลาดต้องการ (Demand Share d)", "quadrant": "กลุ่มจตุภาค"},
         color_discrete_map={
-            "1. ตรงความต้องการ (High Supply, High Demand)": "#2ECC71",
-            "2. ขาดแคลน (Low Supply, High Demand)": "#E74C3C",
-            "3. สอนเกินความต้องการ (High Supply, Low Demand)": "#F39C12",
+            "1. ตรงความต้องการ (High Supply, High Demand)": "#22C55E",
+            "2. ขาดแคลน (Low Supply, High Demand)": "#E02020",
+            "3. สอนเกินความต้องการ (High Supply, Low Demand)": "#8B5CF6",
             "4. ความสำคัญต่ำ (Low Supply, Low Demand)": "#95A5A6"
         }
     )
@@ -187,8 +187,8 @@ def build_t3_4_top_gaps(mismatch_df: pd.DataFrame):
         title="อันดับทักษะที่มีช่องว่างสูงสุด (Gap Score = d - s)",
         labels={"gap": "Gap Score (บวก = ขาด, ลบ = เกิน)", "skill_name": "ทักษะ", "status": "สถานะช่องว่าง"},
         color_discrete_map={
-            "ตลาดต้องการมากกว่าที่สอน (ขาด)": "#E74C3C",
-            "สอนมากกว่าตลาดต้องการ (เกิน)": "#3498DB"
+            "ตลาดต้องการมากกว่าที่สอน (ขาด)": "#E02020",
+            "สอนมากกว่าตลาดต้องการ (เกิน)": "#30A0E0"
         },
         text="gap"
     )
@@ -226,7 +226,7 @@ def build_t3_5_coverage(mismatch_df: pd.DataFrame):
         y="program",
         orientation="h",
         color="coverage_pct",
-        color_continuous_scale="Teal",
+        color_continuous_scale=["#DCEBFF", "#8B5CF6", "#E02020"],
         title=f"สัดส่วนความครอบคลุมทักษะ Top-{len(market_skills)} ที่ตลาดต้องการ (Coverage@5)",
         labels={"coverage_pct": "ความครอบคลุม (%)", "program": "หลักสูตร"},
         text="coverage_pct"

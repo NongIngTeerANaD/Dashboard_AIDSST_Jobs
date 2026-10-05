@@ -118,3 +118,60 @@ def render_chips(filters, selection):
         chips.append(dbc.Badge(f"สายงาน: {role_str}", color="dark", className="me-1 px-2 py-1"))
 
     return chips
+
+
+# ---------------------------------------------------------------- style/UX callbacks
+from dash import dcc  # noqa: E402
+from app.layout import _NAV  # noqa: E402
+from app.pages.hero import build_hero  # noqa: E402
+
+
+@callback(Output("hero-card", "children"), Input("store-filters", "data"))
+def update_hero(filters):
+    """KPI tiles follow the global country filter."""
+    return build_hero(filters or {})
+
+
+@callback(
+    Output("main-tabs", "active_tab"),
+    [Input(nid, "n_clicks") for nid, _, _, _ in _NAV],
+    prevent_initial_call=True,
+)
+def sidebar_navigate(*_):
+    """Sidebar icon buttons switch the main tab."""
+    trig = ctx.triggered_id
+    for nid, tab, _, _ in _NAV:
+        if trig == nid:
+            return tab
+    return no_update
+
+
+@callback([Output(nid, "className") for nid, _, _, _ in _NAV], Input("main-tabs", "active_tab"))
+def sidebar_active(active_tab):
+    """Highlight the current page icon with a black circle."""
+    return ["nav-ico active" if tab == active_tab else "nav-ico" for _, tab, _, _ in _NAV]
+
+
+@callback(
+    Output("store-selection", "data", allow_duplicate=True),
+    Input("search-program", "value"),
+    State("store-selection", "data"),
+    prevent_initial_call=True,
+)
+def search_select(value, current):
+    """Search box selects a program (same cross-filter as clicking a bar)."""
+    cur = (current or {}).get("program_id")
+    if value == cur or (value is None and cur is None):
+        return no_update
+    return {"program_id": value}
+
+
+@callback(
+    Output("search-program", "value"),
+    Input("store-selection", "data"),
+    State("search-program", "value"),
+)
+def sync_search(selection, current):
+    """Keep the search box in sync when a program is picked by clicking a chart."""
+    pid = (selection or {}).get("program_id")
+    return no_update if pid == current else pid
