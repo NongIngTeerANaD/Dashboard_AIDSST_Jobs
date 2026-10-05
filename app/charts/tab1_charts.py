@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from app.data_loader import data_store
 from app.charts.common import chart_card, empty_chart_card
 
-def build_t1_1_graduates(countries: list, year_range: list, degrees: list, roles: list):
+def build_t1_1_graduates(countries: list, year_range: list, degrees: list, roles: list, highlight: str = None):
     """T1-1: หลักสูตรที่ผลิตบัณฑิตสาย AI/DS/Stat + จำนวนผู้จบต่อปี."""
     df_prog = data_store.programs
     df_grad = data_store.graduates
@@ -40,24 +40,30 @@ def build_t1_1_graduates(countries: list, year_range: list, degrees: list, roles
         title="จำนวนผู้สำเร็จการศึกษาจำแนกตามหลักสูตรและรายปี (คน)",
         labels={"year": "ปี", "graduates_count": "จำนวนผู้จบ (คน)", "program_name_th": "หลักสูตร"},
         color_discrete_sequence=px.colors.qualitative.Bold,
-        text="graduates_count"
+        text="graduates_count",
+        custom_data=["program_id"],
     )
-    fig.update_traces(textposition="outside")
+    fig.update_traces(textposition="outside", texttemplate="%{y}")
+    if highlight:
+        names = merged.loc[merged["program_id"] == highlight, "program_name_th"].unique().tolist()
+        for tr in fig.data:
+            tr.opacity = 1.0 if tr.name in names else 0.25
     fig.update_layout(xaxis=dict(tickmode="linear", dtick=1), margin=dict(t=40, b=40, l=40, r=40))
 
     src = m_prog["source_id"].iloc[0]
     lic = m_prog["license"].iloc[0]
-    status = "curated" if "CURATED" in src else "verified"
+    status = "sample" if "SAMPLE" in src else ("curated" if "CURATED" in src else "verified")
     return chart_card(
         "T1-1: ปริมาณผู้สำเร็จการศึกษาตามหลักสูตรและแนวโน้มรายปี",
         fig,
         source_id=src,
         license_name=lic,
         data_year=f"{year_range[0]}-{year_range[1]}",
-        status=status
+        status=status,
+        graph_id="graph-t1-1",
     )
 
-def build_t1_2_courses(countries: list, degrees: list, roles: list):
+def build_t1_2_courses(countries: list, degrees: list, roles: list, program_id: str = None):
     """T1-2: รายวิชาบังคับที่ตรงกับสาขางาน (Treemap / Sunburst)."""
     df_prog = data_store.programs
     df_courses = data_store.courses
@@ -72,6 +78,8 @@ def build_t1_2_courses(countries: list, degrees: list, roles: list):
         df_prog["degree_level"].isin(degrees) &
         df_prog["role_family"].isin(roles)
     ]
+    if program_id:
+        m_prog = m_prog[m_prog["program_id"] == program_id]
     if m_prog.empty:
         return empty_chart_card("T1-2: โครงสร้างรายวิชาและทักษะที่สอนในหลักสูตร")
 
@@ -96,10 +104,10 @@ def build_t1_2_courses(countries: list, degrees: list, roles: list):
     return chart_card(
         "T1-2: โครงสร้างรายวิชาและทักษะที่สอนในหลักสูตร",
         fig,
-        source_id="CURATED_USER + S03",
-        license_name="Public Syllabus + CC BY 4.0",
-        data_year="2024",
-        status="curated"
+        source_id="SAMPLE_DEMO",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample"
     )
 
 def build_t1_3_employment(countries: list):
@@ -146,7 +154,7 @@ def build_t1_3_employment(countries: list):
         status="verified"
     )
 
-def build_t1_4_tuition(countries: list, degrees: list, roles: list):
+def build_t1_4_tuition(countries: list, degrees: list, roles: list, program_id: str = None):
     """T1-4: ค่าเทอมตลอดหลักสูตร (แสดง ⛔ ถ้าไม่มีข้อมูล)."""
     df_prog = data_store.programs
     df_tuition = data_store.tuition
@@ -158,6 +166,8 @@ def build_t1_4_tuition(countries: list, degrees: list, roles: list):
         df_prog["degree_level"].isin(degrees) &
         df_prog["role_family"].isin(roles)
     ]
+    if program_id:
+        m_prog = m_prog[m_prog["program_id"] == program_id]
     if m_prog.empty:
         return empty_chart_card("T1-4: ค่าเล่าเรียนและค่าธรรมเนียมตลอดหลักสูตร")
 
@@ -184,8 +194,8 @@ def build_t1_4_tuition(countries: list, degrees: list, roles: list):
     return chart_card(
         "T1-4: ค่าเล่าเรียนและค่าธรรมเนียมตลอดหลักสูตร",
         fig,
-        source_id="CURATED_USER",
-        license_name="University Fee Announcement",
-        data_year="2024",
-        status="curated"
+        source_id="SAMPLE_DEMO",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample"
     )

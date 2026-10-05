@@ -44,3 +44,6 @@ logs/
 .env
 *.env
 secrets.yaml
+
+# Generated snapshot
+dashboard_snapshot.html

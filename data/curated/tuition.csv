@@ -1,4 +1,4 @@
 program_id,per_term,total_program,currency,year,source_id,license,source_url,data_year,retrieved_at
-TH_KKU_STAT,18000,144000,THB,2024,CURATED_USER,University Fee Announcement,https://reg.kku.ac.th,2024,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,25000,200000,THB,2024,CURATED_USER,University Fee Announcement,https://reg.kku.ac.th,2024,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,29000,232000,THB,2024,CURATED_USER,University Fee Announcement,https://academic.chula.ac.th,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,18000,144000,THB,2024,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,25000,200000,THB,2024,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,29000,232000,THB,2024,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00

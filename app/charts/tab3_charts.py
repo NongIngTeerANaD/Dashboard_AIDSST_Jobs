@@ -9,7 +9,7 @@ from app.data_loader import data_store
 from app.charts.common import chart_card, empty_chart_card
 from app.metrics import supply_share, demand_share, gap_score, coverage_at_n
 
-def compute_mismatch_table(countries: list, degrees: list, roles: list):
+def compute_mismatch_table(countries: list, degrees: list, roles: list, program_id: str = None):
     """Calculate supply share s, demand share d, and gap score = d - s for each (program, skill)."""
     df_prog = data_store.programs
     df_courses = data_store.courses
@@ -25,6 +25,8 @@ def compute_mismatch_table(countries: list, degrees: list, roles: list):
         df_prog["degree_level"].isin(degrees) &
         df_prog["role_family"].isin(roles)
     ]
+    if program_id:
+        m_prog = m_prog[m_prog["program_id"] == program_id]
     if m_prog.empty:
         return pd.DataFrame()
 
@@ -32,7 +34,8 @@ def compute_mismatch_table(countries: list, degrees: list, roles: list):
     # Total required credits per program
     total_creds = df_courses[df_courses["is_required"]].groupby("program_id")["credits"].sum().to_dict()
 
-    course_with_skills = df_courses.merge(df_map, on="course_code")
+    # only required courses count toward supply (same basis as the denominator)
+    course_with_skills = df_courses[df_courses["is_required"]].merge(df_map, on="course_code")
     # credits per (program_id, skill_id)
     prog_skill_creds = course_with_skills.groupby(["program_id", "skill_id"])["credits"].sum().reset_index()
 
@@ -97,10 +100,11 @@ def build_t3_2_heatmap(mismatch_df: pd.DataFrame):
     return chart_card(
         "T3-2: Heatmap ช่องว่างทักษะ (Skill Gap Heatmap)",
         fig,
-        source_id="S03 (O*NET) + CURATED_USER",
-        license_name="CC BY 4.0 + Public Syllabus",
-        data_year="2024",
-        status="verified"
+        source_id="SAMPLE_DEMO",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample",
+        graph_id="graph-t3-2",
     )
 
 def build_t3_3_quadrant(mismatch_df: pd.DataFrame):
@@ -150,10 +154,10 @@ def build_t3_3_quadrant(mismatch_df: pd.DataFrame):
     return chart_card(
         "T3-3: กราฟ 4 จตุภาค (Quadrant Analysis)",
         fig,
-        source_id="S03 (O*NET) + CURATED_USER",
-        license_name="CC BY 4.0 + Public Syllabus",
-        data_year="2024",
-        status="verified"
+        source_id="SAMPLE_DEMO",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample"
     )
 
 def build_t3_4_top_gaps(mismatch_df: pd.DataFrame):
@@ -188,10 +192,10 @@ def build_t3_4_top_gaps(mismatch_df: pd.DataFrame):
     return chart_card(
         "T3-4: ทักษะที่ขาดแคลนและเกินความต้องการสูงสุด",
         fig,
-        source_id="S03 (O*NET) + CURATED_USER",
-        license_name="CC BY 4.0 + Public Syllabus",
-        data_year="2024",
-        status="verified"
+        source_id="SAMPLE_DEMO",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample"
     )
 
 def build_t3_5_coverage(mismatch_df: pd.DataFrame):
@@ -227,8 +231,8 @@ def build_t3_5_coverage(mismatch_df: pd.DataFrame):
     return chart_card(
         "T3-5: คะแนนความครอบคลุมทักษะ (Coverage@N)",
         fig,
-        source_id="S03 (O*NET) + CURATED_USER",
-        license_name="CC BY 4.0 + Public Syllabus",
-        data_year="2024",
-        status="verified"
+        source_id="SAMPLE_DEMO",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample"
     )

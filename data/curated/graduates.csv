@@ -1,43 +1,43 @@
 program_id,year,graduates_count,source_id,license,source_url,data_year,retrieved_at
-TH_KKU_STAT,2020,35,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2020,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT,2021,37,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2021,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT,2022,40,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2022,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT,2023,43,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2023,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT,2024,46,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2024,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT,2025,49,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2025,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,2020,35,CURATED_USER,Public University Syllabus,https://computing.kku.ac.th/,2020,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,2021,37,CURATED_USER,Public University Syllabus,https://computing.kku.ac.th/,2021,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,2022,40,CURATED_USER,Public University Syllabus,https://computing.kku.ac.th/,2022,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,2023,43,CURATED_USER,Public University Syllabus,https://computing.kku.ac.th/,2023,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,2024,46,CURATED_USER,Public University Syllabus,https://computing.kku.ac.th/,2024,2026-10-05T10:49:22.702882+00:00
-TH_KKU_AI,2025,49,CURATED_USER,Public University Syllabus,https://computing.kku.ac.th/,2025,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,2020,50,CURATED_USER,Public University Syllabus,https://cp.eng.chula.ac.th/,2020,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,2021,54,CURATED_USER,Public University Syllabus,https://cp.eng.chula.ac.th/,2021,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,2022,57,CURATED_USER,Public University Syllabus,https://cp.eng.chula.ac.th/,2022,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,2023,62,CURATED_USER,Public University Syllabus,https://cp.eng.chula.ac.th/,2023,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,2024,66,CURATED_USER,Public University Syllabus,https://cp.eng.chula.ac.th/,2024,2026-10-05T10:49:22.702882+00:00
-TH_CU_DS,2025,70,CURATED_USER,Public University Syllabus,https://cp.eng.chula.ac.th/,2025,2026-10-05T10:49:22.702882+00:00
-TH_CMU_DS,2020,40,CURATED_USER,Public University Syllabus,https://www.cs.science.cmu.ac.th/,2020,2026-10-05T10:49:22.702882+00:00
-TH_CMU_DS,2021,43,CURATED_USER,Public University Syllabus,https://www.cs.science.cmu.ac.th/,2021,2026-10-05T10:49:22.702882+00:00
-TH_CMU_DS,2022,46,CURATED_USER,Public University Syllabus,https://www.cs.science.cmu.ac.th/,2022,2026-10-05T10:49:22.702882+00:00
-TH_CMU_DS,2023,49,CURATED_USER,Public University Syllabus,https://www.cs.science.cmu.ac.th/,2023,2026-10-05T10:49:22.702882+00:00
-TH_CMU_DS,2024,52,CURATED_USER,Public University Syllabus,https://www.cs.science.cmu.ac.th/,2024,2026-10-05T10:49:22.702882+00:00
-TH_CMU_DS,2025,56,CURATED_USER,Public University Syllabus,https://www.cs.science.cmu.ac.th/,2025,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT_MS,2020,15,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2020,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT_MS,2021,16,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2021,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT_MS,2022,17,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2022,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT_MS,2023,18,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2023,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT_MS,2024,19,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2024,2026-10-05T10:49:22.702882+00:00
-TH_KKU_STAT_MS,2025,21,CURATED_USER,Public University Syllabus,https://sc.kku.ac.th/stat/,2025,2026-10-05T10:49:22.702882+00:00
-SG_NUS_DSBA,2020,40,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2020,2026-10-05T10:49:22.702882+00:00
-SG_NUS_DSBA,2021,43,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2021,2026-10-05T10:49:22.702882+00:00
-SG_NUS_DSBA,2022,46,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2022,2026-10-05T10:49:22.702882+00:00
-SG_NUS_DSBA,2023,49,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2023,2026-10-05T10:49:22.702882+00:00
-SG_NUS_DSBA,2024,52,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2024,2026-10-05T10:49:22.702882+00:00
-SG_NUS_DSBA,2025,56,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2025,2026-10-05T10:49:22.702882+00:00
-SG_NTU_DSAI,2020,40,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2020,2026-10-05T10:49:22.702882+00:00
-SG_NTU_DSAI,2021,43,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2021,2026-10-05T10:49:22.702882+00:00
-SG_NTU_DSAI,2022,46,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2022,2026-10-05T10:49:22.702882+00:00
-SG_NTU_DSAI,2023,49,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2023,2026-10-05T10:49:22.702882+00:00
-SG_NTU_DSAI,2024,52,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2024,2026-10-05T10:49:22.702882+00:00
-SG_NTU_DSAI,2025,56,S15,Singapore Open Data Licence v1.0,https://data.gov.sg/datasets/d_3c55210de27fcccda2ed0c63fdd2b352/view,2025,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,2020,35,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,2021,37,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,2022,40,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,2023,43,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,2024,46,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,2025,49,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,2020,35,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,2021,37,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,2022,40,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,2023,43,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,2024,46,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,2025,49,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2020,50,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2021,54,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2022,57,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2023,62,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2024,66,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2025,70,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00
+TH_CMU_DS,2020,40,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+TH_CMU_DS,2021,43,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+TH_CMU_DS,2022,46,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+TH_CMU_DS,2023,49,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+TH_CMU_DS,2024,52,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_CMU_DS,2025,56,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT_MS,2020,15,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT_MS,2021,16,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT_MS,2022,17,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT_MS,2023,18,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT_MS,2024,19,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT_MS,2025,21,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,2020,40,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,2021,43,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,2022,46,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,2023,49,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,2024,52,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,2025,56,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00
+SG_NTU_DSAI,2020,40,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2020,2026-10-05T10:49:22.702882+00:00
+SG_NTU_DSAI,2021,43,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2021,2026-10-05T10:49:22.702882+00:00
+SG_NTU_DSAI,2022,46,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2022,2026-10-05T10:49:22.702882+00:00
+SG_NTU_DSAI,2023,49,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2023,2026-10-05T10:49:22.702882+00:00
+SG_NTU_DSAI,2024,52,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2024,2026-10-05T10:49:22.702882+00:00
+SG_NTU_DSAI,2025,56,SAMPLE_DEMO,ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง),,2025,2026-10-05T10:49:22.702882+00:00

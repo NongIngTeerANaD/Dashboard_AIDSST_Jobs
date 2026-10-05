@@ -18,6 +18,7 @@ STATUS_ICONS = {
     "estimated": "🧮 ค่าประมาณ / อนุมาน",
     "curated": "✍️ ข้อมูลที่ผู้ใช้เพิ่มเอง",
     "missing": "⛔ ไม่มีข้อมูลเปิด",
+    "sample": "🧪 ข้อมูลตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
 }
 
 def empty_chart_card(title: str, msg: str = "ไม่พบข้อมูลสำหรับตัวกรองนี้"):
@@ -32,7 +33,7 @@ def empty_chart_card(title: str, msg: str = "ไม่พบข้อมูล�
         ])
     ], className="h-100 shadow-sm")
 
-def chart_card(title: str, fig: go.Figure, source_id: str, license_name: str, data_year: str, status: str = "verified"):
+def chart_card(title: str, fig: go.Figure, source_id: str, license_name: str, data_year: str, status: str = "verified", graph_id: str = None):
     """Wrap chart in a standardized Bootstrap Card with source badge."""
     from dash import dcc
     status_label = STATUS_ICONS.get(status, "✅ ข้อมูลเปิด")
@@ -51,10 +52,14 @@ def chart_card(title: str, fig: go.Figure, source_id: str, license_name: str, da
     if is_old:
         badge_elements.append(html.Span(" ⚠️ ข้อมูลอาจเก่ากว่า 3 ปี", className="text-warning fw-bold ms-2"))
 
+    graph_kwargs = {"figure": fig, "config": {"displayModeBar": True, "responsive": True}}
+    if graph_id:
+        graph_kwargs["id"] = graph_id
+
     return dbc.Card([
         dbc.CardHeader(html.H5(title, className="mb-0 text-primary")),
         dbc.CardBody([
-            dcc.Graph(figure=fig, config={"displayModeBar": True, "responsive": True}),
-            html.Small(badge_elements, className="text-muted d-block mt-2 border-top pt-2")
+            dcc.Graph(**graph_kwargs),
+            html.Small(badge_elements, className=("text-danger fw-semibold" if status == "sample" else "text-muted") + " d-block mt-2 border-top pt-2")
         ])
     ], className="h-100 shadow-sm")

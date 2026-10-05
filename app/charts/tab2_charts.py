@@ -90,10 +90,10 @@ def build_t2_2_skills(roles: list):
     return chart_card(
         "T2-2: ทักษะและเครื่องมือที่ตลาดต้องการสูงสุด",
         fig,
-        source_id="S03 (O*NET 31.0 Database)",
-        license_name="CC BY 4.0",
-        data_year="2024",
-        status="verified"
+        source_id="SAMPLE_DEMO (รอข้อมูลจริงจาก O*NET S03)",
+        license_name="ตัวอย่างสาธิต (ไม่ใช่ข้อมูลจริง)",
+        data_year="-",
+        status="sample"
     )
 
 def build_t2_3_employers(countries: list):
@@ -159,28 +159,28 @@ def build_t2_4_salary(countries: list):
     fig.add_trace(go.Bar(
         y=sub["degree"],
         x=sub["gross_mthly_25_percentile"],
-        name="Percentile 25 (Entry-level)",
+        name="ถึง P25",
         orientation="h",
         marker=dict(color="#3498DB")
     ))
     fig.add_trace(go.Bar(
         y=sub["degree"],
         x=sub["gross_monthly_median"] - sub["gross_mthly_25_percentile"],
-        name="Median (Mid-level)",
+        name="P25 → Median",
         orientation="h",
         marker=dict(color="#2ECC71")
     ))
     fig.add_trace(go.Bar(
         y=sub["degree"],
         x=sub["gross_mthly_75_percentile"] - sub["gross_monthly_median"],
-        name="Percentile 75 (Senior-level)",
+        name="Median → P75",
         orientation="h",
         marker=dict(color="#F39C12")
     ))
 
     fig.update_layout(
         barmode="stack",
-        title=f"ช่วงเงินเดือนเริ่มต้นรายเดือน (SGD) จำแนกตามหลักสูตร (ปี {latest_yr})",
+        title=f"เงินเดือนบัณฑิตจบใหม่รายเดือน (SGD) P25/Median/P75 (ปี {latest_yr}) — ไม่ใช่ระดับ Entry/Mid/Senior",
         xaxis=dict(title="เงินเดือนรวมรายเดือน (SGD)"),
         yaxis=dict(title="หลักสูตร"),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
@@ -193,5 +193,5 @@ def build_t2_4_salary(countries: list):
         source_id="S15 (Singapore Graduate Employment Survey)",
         license_name="Singapore Open Data Licence v1.0",
         data_year=str(latest_yr),
-        status="estimated"
+        status="verified"
     )

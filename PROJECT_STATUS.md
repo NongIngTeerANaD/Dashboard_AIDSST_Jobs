@@ -168,3 +168,10 @@
 
 | 2026-10-05 | M2-M4 | เชื่อมต่อข้อมูลจริง S01, S02, S14, S15 + Curated, สร้างกราฟ Plotly ครบทั้ง 3 Tab, แก้ไข Dash callback registration, ผ่านการทดสอบ 18/18 tests |
 
+
+| 2026-10-05 | M5 | ตรวจพบข้อมูล curated (graduates/courses/tuition/skills_demand) เป็นตัวเลขสมมติที่ติดป้ายแหล่งจริง → เปลี่ยนเป็น SAMPLE_DEMO + ป้าย 🧪 + แบนเนอร์เตือน; เพิ่ม cross-filter (คลิกหลักสูตรใน T1-1/T3-2), Tab 4 แหล่งข้อมูล/ระเบียบวิธี, ปุ่ม CSV ใน Tab 3, แก้ supply share ให้นับเฉพาะวิชาบังคับ, แก้ป้าย T2-4, เพิ่ม tests/test_app_callbacks.py (43 tests ผ่าน), run_dashboard.bat/.sh |
+
+## สิ่งที่ยังเหลือ
+- แทนที่ข้อมูล SAMPLE_DEMO ด้วยข้อมูลจริง (ดู data/curated/SAMPLE_NOTICE.md); skills_demand ควรมาจาก O*NET (S03) จริง
+- ETL ของ S03, S05–S13 ยังไม่ได้เชื่อมเข้าแอป (ต้องรันบนเครื่องที่เข้าถึงเว็บต้นทาง)
+- ปุ่มส่งออก PNG, dark theme, ตรวจ AC-09 (<=2 วินาที) บนข้อมูลจริง
