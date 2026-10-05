@@ -1,1 +1,16 @@
-﻿skill_id,skill_name,category,taxonomy_ref,source_id,license,source_url,data_year,retrieved_at
+skill_id,skill_name,category,taxonomy_ref,source_id,license,source_url,data_year,retrieved_at
+SK_PYTHON,Python,language,ONET-15-2051.00-Tech,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_SQL,SQL & Database,tool,ONET-15-2051.00-Tech,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_R,R Programming,language,ONET-15-2041.00-Tech,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_ML,Machine Learning,hard,ONET-15-2051.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_DEEP_LEARNING,Deep Learning & Neural Networks,hard,ONET-15-2051.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_STATS_INF,Statistical Inference & Hypothesis Testing,hard,ONET-15-2041.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_REGRESSION,Regression & Predictive Modeling,hard,ONET-15-2041.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_DATA_VIZ,Data Visualization & BI (Tableau/PowerBI),tool,ONET-15-2051.00-Tech,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_BIG_DATA,Big Data (Spark / Hadoop / Hive),tool,ONET-15-2051.00-Tech,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_CLOUD_DEVOPS,Cloud & MLOps (AWS/GCP/Docker),tool,ONET-15-1252.00-Tech,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_NLP,Natural Language Processing (NLP/LLM),hard,ONET-15-2051.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_TIME_SERIES,Time Series & Forecasting,hard,ONET-15-2041.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_MATH_OPT,Linear Algebra & Optimization,hard,ONET-15-2041.00-Knowledge,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_COMM,Data Storytelling & Communication,soft,ONET-15-2051.00-Skill,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00
+SK_PROBLEM_SOLVING,Critical Thinking & Problem Solving,soft,ONET-15-2051.00-Skill,S03,CC BY 4.0,https://www.onetcenter.org/database.html,2024,2026-10-05T10:49:22.702882+00:00

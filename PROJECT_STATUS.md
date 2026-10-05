@@ -9,9 +9,9 @@
 | ระยะ | สถานะ | รายละเอียด |
 |------|--------|------------|
 | M1 — โครงโปรเจกต์ + ETL | ✅ เสร็จแล้ว | scaffold โครงสร้างไฟล์, requirements.txt, ETL stubs, unit tests (13 passed) |
-| M2 — Global filters + Tab 2 | ⏳ รอ | — |
-| M3 — Tab 1 | ⏳ รอ | — |
-| M4 — Tab 3 + Unit tests | ⏳ รอ | — |
+| M2 — Global filters + Tab 2 | ✅ เสร็จแล้ว | T2-1 Indeed Job Postings Index, T2-2 Skills in demand, T2-3 MOM Treemap, T2-4 Salary |
+| M3 — Tab 1 | ✅ เสร็จแล้ว | T1-1 Graduates by Program/Year, T1-2 Course Sunburst, T1-3 Employment, T1-4 Tuition |
+| M4 — Tab 3 + Unit tests | ✅ เสร็จแล้ว | T3-2 Skill Gap Heatmap, T3-3 Quadrant, T3-4 Top Gaps, T3-5 Coverage@5, 18/18 tests passed |
 | M5 — Cross-filter + QA | ⏳ รอ | — |
 
 ---
@@ -164,4 +164,7 @@
 2. **Tab 2** ไม่มีข้อมูลตลาดงานไทย/อาเซียน ใช้ตัวแทน US/EU/SG
 3. **เงินเดือนระดับ Entry/Mid/Senior** เป็นการอนุมาน (🧮) จาก OEWS percentile + O*NET job zones
 4. **R01–R03** ปิดด้วย feature flag จนกว่าผู้ใช้ตรวจ license
+
+
+| 2026-10-05 | M2-M4 | เชื่อมต่อข้อมูลจริง S01, S02, S14, S15 + Curated, สร้างกราฟ Plotly ครบทั้ง 3 Tab, แก้ไข Dash callback registration, ผ่านการทดสอบ 18/18 tests |
 

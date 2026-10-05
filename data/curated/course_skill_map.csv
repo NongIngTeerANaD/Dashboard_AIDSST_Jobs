@@ -1,1 +1,29 @@
-﻿course_code,skill_id,confidence,notes
+course_code,skill_id,confidence,notes
+SC612101,SK_STATS_INF,exact,Mathematical statistics
+SC612101,SK_MATH_OPT,exact,Probability theory
+SC612102,SK_REGRESSION,exact,Linear/Logistic regression
+SC612103,SK_PYTHON,exact,Python programming
+SC612103,SK_R,exact,R programming
+SC613104,SK_STATS_INF,exact,ANOVA & experimental design
+SC613105,SK_STATS_INF,exact,"PCA, Factor analysis"
+SC613106,SK_ML,exact,Supervised/Unsupervised ML
+SC614107,SK_SQL,exact,Relational DB and SQL
+SC614108,SK_TIME_SERIES,exact,ARIMA and forecasting
+CP352101,SK_ML,exact,AI basics
+CP352102,SK_ML,exact,Machine learning
+CP352102,SK_DEEP_LEARNING,exact,Deep learning
+CP352103,SK_NLP,exact,NLP and LLMs
+CP353104,SK_PYTHON,exact,Python OOP
+CP354106,SK_CLOUD_DEVOPS,exact,Cloud and MLOps
+2110215,SK_PYTHON,exact,Python for Data Science
+2110215,SK_R,exact,R for Data Science
+2110327,SK_BIG_DATA,exact,Spark and Big Data
+2110444,SK_ML,exact,Practical ML
+2110531,SK_DATA_VIZ,exact,Tableau and visualization
+2110532,SK_SQL,exact,SQL and Data Engineering
+DSA1101,SK_STATS_INF,exact,Intro Data Science
+DSA2101,SK_R,exact,R programming
+DSA2101,SK_SQL,exact,SQL tools
+DSA3101,SK_PYTHON,exact,Python in practice
+DSA3101,SK_ML,exact,ML in practice
+ST3131,SK_REGRESSION,exact,Regression analysis

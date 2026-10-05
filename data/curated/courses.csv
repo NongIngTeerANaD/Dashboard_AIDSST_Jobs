@@ -1,1 +1,24 @@
-﻿program_id,course_code,course_name,credits,is_required,source_id,license,source_url,data_year,retrieved_at
+program_id,course_code,course_name,credits,is_required,source_id,license,source_url,data_year,retrieved_at
+TH_KKU_STAT,SC612101,Probability and Mathematical Statistics,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC612102,Applied Regression Analysis,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC612103,Statistical Programming with R & Python,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC613104,Experimental Design and Analysis,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC613105,Multivariate Statistical Analysis,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC613106,Data Mining and Machine Learning,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC614107,Database Systems and SQL,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_STAT,SC614108,Time Series Analysis and Forecasting,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,CP352101,Foundations of Artificial Intelligence,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,CP352102,Machine Learning and Deep Learning,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,CP352103,Computer Vision and NLP,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,CP353104,Python Programming & Software Engineering,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,CP353105,Data Structures & Algorithms,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_KKU_AI,CP354106,Cloud Computing & MLOps,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2110215,Data Science Programming (Python/R),3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2110327,Big Data Processing and Spark,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2110444,Applied Machine Learning,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2110531,Data Visualization & BI,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+TH_CU_DS,2110532,Database & SQL Engineering,3,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,DSA1101,Introduction to Data Science,4,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,DSA2101,Essential Data Analytics Tools: R and SQL,4,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,DSA3101,Data Science in Practice (Python/ML),4,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00
+SG_NUS_DSBA,ST3131,Regression Analysis,4,True,CURATED_USER,Public University Syllabus,https://curriculum.official,2024,2026-10-05T10:49:22.702882+00:00

@@ -1,33 +1,37 @@
-﻿"""Fetch raw data for S01 · Indeed Job Postings Index.
-
-Source: https://github.com/hiring-lab/job_postings_tracker
-License: CC BY 4.0
-
-This module only downloads; no scraping or HTML parsing.
-Run with: python -m etl.run_all  (calls run() below)
-"""
-import logging
-from pathlib import Path
-from etl._base import RAW_DIR, download_file, log
+﻿"""Fetch S01: Indeed Job Postings Index from GitHub (CC BY 4.0)."""
+import requests, pandas as pd, io
+from etl._base import RAW_DIR, add_provenance, save_parquet, log
 
 SOURCE_ID = "S01"
-# TODO: Set the actual download URL(s) for this source
-DOWNLOAD_URLS: list[tuple[str, str]] = [
-    # (url, local_filename)
-    # ("https://example.com/data.csv", "raw_s01.csv"),
-]
+SOURCE_LICENSE = "CC BY 4.0"
+SOURCE_URL = "https://github.com/hiring-lab/job_postings_tracker"
 
+COUNTRY_FILES = {
+    "US": "https://raw.githubusercontent.com/hiring-lab/job_postings_tracker/master/US/aggregate_job_postings_US.csv",
+    "GB": "https://raw.githubusercontent.com/hiring-lab/job_postings_tracker/master/GB/aggregate_job_postings_GB.csv",
+    "DE": "https://raw.githubusercontent.com/hiring-lab/job_postings_tracker/master/DE/aggregate_job_postings_DE.csv",
+    "FR": "https://raw.githubusercontent.com/hiring-lab/job_postings_tracker/master/FR/aggregate_job_postings_FR.csv",
+    "AU": "https://raw.githubusercontent.com/hiring-lab/job_postings_tracker/master/AU/aggregate_job_postings_AU.csv",
+}
 
 def run() -> None:
-    """Download all files for S01 · Indeed Job Postings Index."""
-    dest_dir = RAW_DIR / "s01"
-    dest_dir.mkdir(parents=True, exist_ok=True)
-    if not DOWNLOAD_URLS:
-        log.warning("[%s] No download URLs configured yet — skipping fetch.", SOURCE_ID)
-        return
-    for url, filename in DOWNLOAD_URLS:
-        download_file(url, dest_dir / filename)
-
+    dest = RAW_DIR / "s01"; dest.mkdir(exist_ok=True)
+    dfs = []
+    for country, url in COUNTRY_FILES.items():
+        try:
+            resp = requests.get(url, timeout=30)
+            resp.raise_for_status()
+            df = pd.read_csv(io.StringIO(resp.text))
+            df["country_code"] = country
+            df.to_csv(dest / f"indeed_postings_{country}.csv", index=False)
+            dfs.append(df)
+            log.info("[S01] %s: %d rows", country, len(df))
+        except Exception as e:
+            log.warning("[S01] %s failed: %s", country, e)
+    if dfs:
+        combined = pd.concat(dfs, ignore_index=True)
+        combined = add_provenance(combined, SOURCE_ID, SOURCE_LICENSE, SOURCE_URL, "2020-2026")
+        save_parquet(combined, "s01_job_postings")
 
 if __name__ == "__main__":
     run()
